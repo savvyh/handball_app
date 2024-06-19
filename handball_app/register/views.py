@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.views import PasswordResetConfirmView
 
 
-def inscription(request):
+def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -17,17 +17,17 @@ def inscription(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')
+                return redirect('home')
         else:
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, error)
     else:
         form = CustomUserCreationForm()  
-    return render(request, 'register/inscription.html', {'form': form})
+    return render(request, 'register/signup.html', {'form': form})
 
 
-def connexion(request):
+def login_view(request):
     if request.method == 'POST':
         form = CustomLoginForm(request.POST)
         if form.is_valid():
@@ -36,12 +36,12 @@ def connexion(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')
+                return redirect('home')
             else:
-                return render(request, 'register/connexion.html', {'form': form, 'error': 'Nom d\'utilisateur ou mot de passe incorrect'})
+                return render(request, 'register/login.html', {'form': form, 'error': 'Nom d\'utilisateur ou mot de passe incorrect'})
     else:
         form = CustomLoginForm()
-    return render(request, 'register/connexion.html', {'form': form})
+    return render(request, 'register/login.html', {'form': form})
 
 
 def authentification(request):
@@ -50,9 +50,9 @@ def authentification(request):
     return render(request, 'register/authentification.html', {'form_login': form_login, 'form_register': form_register})
 
 
-def deconnexion(request):
+def logout_view(request):
     logout(request)
-    return redirect('index')
+    return redirect('landing')
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     def form_valid(self, form):
