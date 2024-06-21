@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/home.css' %}">
+    <title>Accueil</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div>
+                <h1>HandBapp</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Que cherchez-vous ?">
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="#">Bibliothèque</a></li>
+                <li><a href="#">Lexique</a></li>
+                <li><a href="#">Boutique</a></li>
+                <li class="dropdown">
+                    <a href="#">Mon Espace</a>
+                    <ul class="dropdown-content">
+                        <li><a href="{% url 'settings' %}">Paramètres</a></li>
+                        <li><a href="{% url 'account' %}">Mon Compte</a></li>
+                        <li><a href="{% url 'club' %}">Espace Club</a></li>
+                        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="menu-icon">
+                <span>&#9776;</span>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <h1>Bienvenue dans ton espace personnel Coach</h1>
+    </div>
+    <div>
+        <h3>Prêt à commencer la séance d'entraînement?</h3>
+        <button><a href="{% url 'create-training' %}">Je crée ma séance</a></button>
+    </div>
+</body>
+</html>

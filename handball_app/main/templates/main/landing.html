@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HandBapp</title>
+    <link rel="stylesheet" href="{% static 'main/landing.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;700&display=swap">
+</head>
+<body>
+    <header>
+        <div>
+            <nav class="navbar">
+                <h1>HandBapp</h1>
+                <button type="button" class="login-btn"><a href="{% url 'authentification' %}">S'identifier</a></button>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="background-image"></div>
+        <section class="hero-section">
+            <h2>Crée tes meilleures séances d'entraînement</h2>
+            <p>Accède à un large contenu <span class="highlight">vidéo</span>, discute avec Oli le <span class="highlight">chatbot</span> qui t'aide à concevoir <span class="highlight">la</span> séance idéale. <br>Gère le <span class="highlight">suivi</span> de tes séances tout au long de ta saison !</p>
+            <button type="button" class="test-btn"><a href="{% url 'subscribe' %}">Je teste gratuitement !</a></button>
+            <div class="start-section">
+                <h4>Prêt à créer ta séance ? Entre ton adresse mail pour t'inscrire :</h4>
+                <input class="input-mail" type="text" placeholder="adresse mail"></input>
+                <button type="button" class="start-btn"><a href="{% url 'subscribe' %}">Commencer</a></button>
+            </div>
+        </section>
+        <section class="steps-section">
+            <div class="step step-1">
+                <div class="step-number step-number1">1</div>
+                <p>Choisi le thème de ta séance adapté à ton collectif !</p>
+            </div>
+            <div class="step step-2">
+                <div class="step-number step-number2">2</div>
+                <p>Aide toi du chatbot ou rends toi directement dans la bibliothèque pour choisir tes exercices</p>
+            </div>
+            <div class="step step-3">
+                <div class="step-number step-number3">3</div>
+                <p>Télécharge ta séance détaillée pour organiser au mieux ton entraînement !</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Qui sommes nous ?</h3>
+                <p>L'univers de Handball Coach</p>
+                <p>Contact</p>
+            </div>
+            <div class="footer-section">
+                <h3>Conditions Générales</h3>
+                <p>Mentions Légales</p>
+                <p>Se désabonner</p>
+            </div>
+            <div class="footer-section">
+                <h3>Partenaires</h3>
+                <p>Nos partenaires</p>
+                <p>Nos offres</p>
+            </div>
+        </div>
+        <p class="copy">&copy; 2024 HandBapp. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

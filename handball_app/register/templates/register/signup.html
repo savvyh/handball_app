@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>S'inscrire</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'register/signup.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">HandBapp</h1>
+            <img src="{% static 'main/ballon.png' %}" alt="Logo" class="ballon">
+        </header>
+        <main>
+            <h2>S'inscrire</h2>
+            <form class="form" method="post">
+                {% csrf_token %}
+        
+                {% if form.errors %}
+                    <div class="error-messages">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="field">
+                    <input autocomplete="off" placeholder="Nom d'utilisateur" class="input-field" type="text" name="username" id="id_username">
+                </div>
+                <div class="field">
+                    <input autocomplete="off" placeholder="Mot de passe" class="input-field" type="password" name="password1" id="id_password1">
+                </div>
+                <div class="field">
+                    <input autocomplete="off" placeholder="Confirmez le mot de passe" class="input-field" type="password" name="password2" id="id_password2">
+                </div>
+                <div class="field">
+                    <input autocomplete="off" placeholder="Adresse e-mail" class="input-field" type="email" name="email" id="id_email">
+                </div>
+                <button class="button1" type="submit">Je m'inscris</button>
+            </form>
+        </main>
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>

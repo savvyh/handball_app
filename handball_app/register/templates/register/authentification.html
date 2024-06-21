@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Authentification</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'register/authentification.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Authentification</h2>
+        <div class="forms">
+            <div class="login-form">
+                <h3>Se connecter</h3>
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    {{ form_login.as_p }}
+                    <button type="submit">Se connecter</button>
+                </form>
+            </div>
+            <div class="register-form">
+                <h3>S'inscrire</h3>
+                <form method="post" action="{% url 'register' %}">
+                    {% csrf_token %}
+                    {{ form_register.as_p }}
+                    <button type="submit">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
