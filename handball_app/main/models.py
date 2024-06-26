@@ -1,12 +1,30 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+CATEGORY_CHOICES = [
+    ('mini_hand', 'Mini Hand'),
+    ('-9', '-9'),
+    ('-11F', '-11F'),
+    ('-11G', '-11G'),
+    ('-13F', '-13F'),
+    ('-13G', '-13G'),
+    ('-15F', '-15F'),
+    ('-15G', '-15G'),
+    ('-18F', '-18F'),
+    ('-18G', '-18G'),
+]
 
-class User(models.Model):
-    user_name = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    email = models.EmailField()
-    personal_informations = models.TextField()
-    account_pref = models.CharField(max_length=100)
+class Category(models.Model):
+    name = models.CharField(max_length=50, choices=CATEGORY_CHOICES, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class User(AbstractUser):
+    username = models.CharField(max_length=100, unique=True, default='default_username')
+    categories = models.ManyToManyField(Category)
+    personal_informations = models.TextField(blank=True, null=True)
+    account_pref = models.CharField(max_length=100, blank=True, null=True)
 
 class TrainingSession(models.Model):
     session_title = models.CharField(max_length=100)
