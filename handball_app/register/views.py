@@ -1,11 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .forms import CustomUserCreationForm, CustomLoginForm
+from .forms import CustomUserCreationForm, CustomLoginForm, UserUpdateForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.views import PasswordResetConfirmView
-
+from django.contrib.auth.decorators import login_required
 
 def signup(request):
     if request.method == 'POST':
@@ -23,7 +23,7 @@ def signup(request):
                 for error in errors:
                     messages.error(request, error)
     else:
-        form = CustomUserCreationForm()  
+        form = CustomUserCreationForm()
     return render(request, 'register/signup.html', {'form': form})
 
 
@@ -58,3 +58,15 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     def form_valid(self, form):
         response = super().form_valid(form)
         return HttpResponseRedirect(reverse_lazy('login'))
+
+@login_required
+def user_profile(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Vos informations ont été mises à jour avec succès.')
+            return redirect('user_profile')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, 'register/user_profile.html', {'form': form})
