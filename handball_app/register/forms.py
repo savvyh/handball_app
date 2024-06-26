@@ -1,18 +1,17 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-
+from main.models import User, Category
 
 class CustomUserCreationForm(UserCreationForm):
     """
     Formulaire de création d'utilisateur avec des messages d'erreur personnalisés.
     """
     username = forms.CharField(
-    max_length=15,
-    label="Nom d'utilisateur",
-    error_messages={
-        'max_length': "Nom d'utilisateur trop long (15 caractères maximum)",
-        'required': "Ce champs est obligatoire."
+        max_length=15,
+        label="Nom d'utilisateur",
+        error_messages={
+            'max_length': "Nom d'utilisateur trop long (15 caractères maximum)",
+            'required': "Ce champ est obligatoire."
         }
     )
     email = forms.EmailField(
@@ -21,7 +20,7 @@ class CustomUserCreationForm(UserCreationForm):
             'required': "Veuillez entrer une adresse e-mail valide.",
             'invalid': "Adresse e-mail invalide."
         }
-        )
+    )
     password1 = forms.CharField(
         label="Mot de passe",
         widget=forms.PasswordInput,
@@ -37,23 +36,34 @@ class CustomUserCreationForm(UserCreationForm):
             'password_mismatch': "Les deux mots de passe ne correspondent pas.",
         }
     )
+    categories = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True,
+        label="Catégories entraînées",
+        error_messages={
+            'required': "Veuillez choisir une catégorie.",
+        }
+    )
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ['username', 'email', 'password1', 'password2', 'categories']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].help_text = None
         self.fields['password2'].help_text = None
 
-
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
+        user.set_password(self.cleaned_data['password1'])
         if commit:
             user.save()
+            user.categories.set(self.cleaned_data['categories'])
         return user
+
 
 class CustomLoginForm(forms.Form):
     """
@@ -61,3 +71,28 @@ class CustomLoginForm(forms.Form):
     """
     username = forms.CharField(max_length=15, label="Nom d'utilisateur")
     password = forms.CharField(widget=forms.PasswordInput, label="Mot de passe")
+
+class UserUpdateForm(forms.ModelForm):
+    """
+    Formulaire pour la mise à jour des informations utilisateur.
+    """
+    email = forms.EmailField(
+        required=True,
+        error_messages={
+            'required': "Veuillez entrer une adresse e-mail valide.",
+            'invalid': "Adresse e-mail invalide."
+        }
+    )
+    categories = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True,
+        label="Catégories entraînées",
+        error_messages={
+            'required': "Veuillez choisir une catégorie.",
+        }
+    )
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'categories', 'personal_informations', 'account_pref']
