@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mon espace</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'register/signup.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">HandBapp</h1>
+            <img src="{% static 'main/ballon.png' %}" alt="Logo" class="ballon">
+        </header>
+        <main>
+            <h2>Modifier mes informations</h2>
+            <form class="form" method="post">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="error-messages">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="field">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
+                <div class="field">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                </div>
+                <div class="field">
+                    <label for="id_categories">Catégories entraînées :</label>
+                    {{ form.categories }}
+                </div>
+                <div class="field">
+                    {{ form.personal_informations.label_tag }}
+                    {{ form.personal_informations }}
+                </div>
+                <div class="field">
+                    {{ form.account_pref.label_tag }}
+                    {{ form.account_pref }}
+                </div>
+                <button class="button1" type="submit">Enregistrer les modifications</button>
+            </form>
+        </main>
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>
