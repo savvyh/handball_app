@@ -35,16 +35,20 @@
                     </div>
                 {% endif %}
                 <div class="field">
-                    <input autocomplete="off" placeholder="Nom d'utilisateur" class="input-field" type="text" name="username" id="id_username">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
                 </div>
                 <div class="field">
-                    <input autocomplete="off" placeholder="Mot de passe" class="input-field" type="password" name="password1" id="id_password1">
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
                 </div>
                 <div class="field">
-                    <input autocomplete="off" placeholder="Confirmez le mot de passe" class="input-field" type="password" name="password2" id="id_password2">
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
                 </div>
                 <div class="field">
-                    <input autocomplete="off" placeholder="Adresse e-mail" class="input-field" type="email" name="email" id="id_email">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
                 </div>
                 <button class="button1" type="submit">Je m'inscris</button>
             </form>
