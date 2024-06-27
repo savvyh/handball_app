@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'register/signup.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Open+Sans:wght@400;700&display=swap">
 </head>
 <body>
     <div class="container">
@@ -19,7 +20,6 @@
             <h2>S'inscrire</h2>
             <form class="form" method="post">
                 {% csrf_token %}
-        
                 {% if form.errors %}
                     <div class="error-messages">
                         <ul>
@@ -53,8 +53,7 @@
                 <button class="button1" type="submit">Je m'inscris</button>
             </form>
         </main>
-        <footer>
-        </footer>
+        <footer></footer>
     </div>
 </body>
 </html>

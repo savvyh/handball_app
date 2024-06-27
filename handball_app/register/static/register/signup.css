@@ -4,11 +4,9 @@
     padding: 0;
 }
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #fff;
     color: #333;
-    margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,42 +15,14 @@ body {
 
 .container {
     text-align: center;
-    width: 300px;
+    width: 400px;
     border: 1px solid #00B3BF;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(249, 109, 127, 0.7);
+    box-shadow: 0 0 20px rgba(0, 179, 191, 0.5);
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transform-style: preserve-3d;
-    perspective: 1000px;
-}
-
-.error-messages {
-    color: red;
-    font-weight: bold;
-    font-size: 12px;
-}
-
-.error-messages ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.error-messages li {
-    margin-bottom: 20px;
-}
-
-.field {
-    transform: translateZ(20px);
-}
-
-header {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -76,6 +46,7 @@ main {
 h2 {
     font-size: 24px;
     color: #2C3E50;
+    margin-bottom: 20px;
 }
 
 form {
@@ -84,15 +55,31 @@ form {
     align-items: center;
 }
 
-label {
-    margin: 10px 0 5px;
+.error-messages {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.error-messages ul {
+    list-style: none;
+}
+
+.field {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
     font-size: 14px;
 }
 
-.input-field {
+.field input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
