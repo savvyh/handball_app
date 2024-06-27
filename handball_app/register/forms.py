@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from main.models import User, Category
+from main.models import User
 
 class CustomUserCreationForm(UserCreationForm):
     """
@@ -36,19 +36,10 @@ class CustomUserCreationForm(UserCreationForm):
             'password_mismatch': "Les deux mots de passe ne correspondent pas.",
         }
     )
-    categories = forms.ModelMultipleChoiceField(
-        queryset=Category.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        required=True,
-        label="Catégories entraînées",
-        error_messages={
-            'required': "Veuillez choisir une catégorie.",
-        }
-    )
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'categories']
+        fields = ['username', 'email', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -61,7 +52,6 @@ class CustomUserCreationForm(UserCreationForm):
         user.set_password(self.cleaned_data['password1'])
         if commit:
             user.save()
-            user.categories.set(self.cleaned_data['categories'])
         return user
 
 
@@ -83,16 +73,7 @@ class UserUpdateForm(forms.ModelForm):
             'invalid': "Adresse e-mail invalide."
         }
     )
-    categories = forms.ModelMultipleChoiceField(
-        queryset=Category.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        required=True,
-        label="Catégories entraînées",
-        error_messages={
-            'required': "Veuillez choisir une catégorie.",
-        }
-    )
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'categories', 'personal_informations', 'account_pref']
+        fields = ['username', 'email', 'personal_informations', 'account_pref']
