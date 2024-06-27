@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HandBapp</title>
+    <title>TakTik</title>
     <link rel="stylesheet" href="{% static 'main/landing.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Open+Sans:wght@400;700&display=swap">
 </head>
 <body>
     <header>
         <div>
             <nav class="navbar">
-                <h1>HandBapp</h1>
+                <h1>TakTik</h1>
                 <button type="button" class="login-btn"><a href="{% url 'authentification' %}">S'identifier</a></button>
             </nav>
         </div>
@@ -20,34 +20,128 @@
     <main>
         <div class="background-image"></div>
         <section class="hero-section">
-            <h2>Crée tes meilleures séances d'entraînement</h2>
-            <p>Accède à un large contenu <span class="highlight">vidéo</span>, discute avec Oli le <span class="highlight">chatbot</span> qui t'aide à concevoir <span class="highlight">la</span> séance idéale. <br>Gère le <span class="highlight">suivi</span> de tes séances tout au long de ta saison !</p>
+            <h2>Le Club Au Service De Ses Entraîneurs</h2>
+            <p>Boostez les <span class="highlight">performances</span> de vos entraîneurs avec <i>TakTik</i>.</p>
+            <p>Grâce à notre <span class="highlight">plateforme intuitive</span>, partagez facilement des <span class="highlight">vidéos d'entraînement</span> adaptées à votre projet sportif et personnalisées pour chaque niveau. En quelques clics, vos entraîneurs peuvent créer des <span class="highlight">séances sur mesure</span> et se concentrer sur l'essentiel : développer les <span class="highlight">talents</span> de leurs joueurs et améliorer les <span class="highlight">performances</span> de l'équipe. Avec <i>TakTik</i>, chaque entraînement devient une opportunité de progresser.</p>
             <button type="button" class="test-btn"><a href="{% url 'subscribe' %}">Je teste gratuitement !</a></button>
             <div class="start-section">
                 <h4>Prêt à créer ta séance ? Entre ton adresse mail pour t'inscrire :</h4>
-                <input class="input-mail" type="text" placeholder="adresse mail"></input>
+                <input class="input-mail" type="text" placeholder="adresse mail">
                 <button type="button" class="start-btn"><a href="{% url 'subscribe' %}">Commencer</a></button>
             </div>
         </section>
+        
         <section class="steps-section">
             <div class="step step-1">
                 <div class="step-number step-number1">1</div>
-                <p>Choisi le thème de ta séance adapté à ton collectif !</p>
+                <p>Choisis le thème de ta séance adapté à ton collectif.</p>
             </div>
             <div class="step step-2">
                 <div class="step-number step-number2">2</div>
-                <p>Aide toi du chatbot ou rends toi directement dans la bibliothèque pour choisir tes exercices</p>
+                <p>Aide-toi du chatbot ou rends-toi directement dans la bibliothèque pour choisir tes exercices.</p>
             </div>
             <div class="step step-3">
                 <div class="step-number step-number3">3</div>
-                <p>Télécharge ta séance détaillée pour organiser au mieux ton entraînement !</p>
+                <p>Télécharge ta séance détaillée pour organiser au mieux ton entraînement.</p>
+            </div>
+        </section>
+        
+        <section class="features-section">
+            <h2>Les Fonctionnalités qui Font la Différence</h2>
+            <div class="feature">
+                <h3>Bibliothèque de Vidéos</h3>
+                <p>Accédez à une vaste bibliothèque de vidéos d'entraînement fournies par votre club et en total accord avec le projet sportif mis en place.</p>
+            </div>
+            <div class="feature">
+                <h3>Création de Séances</h3>
+                <p>Créez des séances complètes de A à Z en quelques clics.</p>
+                <button type="button"><a href="{% url 'create-training' %}">Je crée ma séance</a></button>
+            </div>
+            <div class="feature">
+                <h3>Partage et Collaboration</h3>
+                <p>Partagez des séances et collaborez avec tous les entraîneurs du club.</p>
+            </div>
+            <div class="feature">
+                <h3>Suivi des Performances</h3>
+                <p>Suivez l'élaboration de vos séances et adaptez les entraînements.</p>
+            </div>
+        </section>
+        
+        <section class="testimonials-section">
+            <h2>Ce que Disent Nos Utilisateurs</h2>
+            <div class="testimonial">
+                <p>"Grâce à TakTik, nos entraînements sont plus structurés et les résultats sont au rendez-vous !" - Jean Dupont, Entraîneur du Club X</p>
+            </div>
+            <div class="testimonial">
+                <p>"Une ressource indispensable pour tout club de handball qui souhaite innover." - Marie Legrand, Directrice Technique du Club Y</p>
+            </div>
+        </section>
+        
+        <section class="video-section">
+            <h2>Découvrez TakTik en Action</h2>
+            <video controls>
+                <source src="{% static 'videos/demo.mp4' %}" type="video/mp4">
+                Votre navigateur ne supporte pas la vidéo.
+            </video>
+        </section>
+        
+        <section class="pricing-section">
+            <h2>Choisissez le Plan qui Vous Convient</h2>
+            <div class="pricing-plan">
+                <h3>Offre Découverte</h3>
+                <p>15 jours gratuits !</p>
+                <p>Gratuit</p>
+            </div>
+            <div class="pricing-plan">
+                <h3>Plan Club 3 Profils</h3>
+                <p>Jusqu'à 3 profils différents depuis l'application, accès complet.</p>
+                <p>39€/an</p>
+            </div>
+            <div class="pricing-plan">
+                <h3>Plan Club 8 Profils</h3>
+                <p>Accès complet + fonctionnalités avancées, jusqu'à 8 profils différents.</p>
+                <p>69€/an</p>
+            </div>
+            <div class="pricing-plan">
+                <h3>Plan Club 20 Profils</h3>
+                <p>Accès complet + fonctionnalités avancées, jusqu'à 20 profils entraîneurs pour satisfaire l'ensemble de votre staff.</p>
+                <p>99€/an</p>
+            </div>
+            <button type="button" class="subscribe-btn"><a href="{% url 'subscribe' %}">Commencez votre essai gratuit de 15 jours</a></button>
+        </section>
+        
+        <section class="faq-section">
+            <h2>Questions Fréquemment Posées</h2>
+            <div class="faq">
+                <h3>Comment puis-je m'inscrire ?</h3>
+                <p>Inscrivez-vous en cliquant sur le bouton "Je teste gratuitement" et suivez les instructions.</p>
+            </div>
+            <div class="faq">
+                <h3>Puis-je m'inscrire en tant qu'entraîneur ?</h3>
+                <p>Bien sûr ! Une fois inscrit, créez votre profil entraîneur, contactez votre club afin qu'il vous fournisse le contenu adapté à vos besoins.</p>
+            </div>
+            <div class="faq">
+                <h3>Comment accéder aux vidéos ?</h3>
+                <p>Les vidéos sont accessibles via notre bibliothèque une fois que vous êtes connecté.</p>
+            </div>
+            <div class="faq">
+                <h3>Je n'ai jamais coaché, est-ce que je pourrais me servir de TakTik ?</h3>
+                <p>TakTik est conçu comme un outil collaboratif entre le personnel formé de votre club et les entraîneurs amateurs. Grâce à ce nouvel outil, il vous sera très simple de créer une séance adaptée à vos besoins.</p>
+            </div>
+            <div class="faq">
+                <h3>Puis-je annuler mon abonnement à tout moment ?</h3>
+                <p>Oui, vous pouvez annuler votre abonnement à tout moment depuis votre compte.</p>
+            </div>
+            <div class="faq">
+                <h3>Pour tout autre question, n'hésitez pas à nous contacter 😉</h3>
+                <p><a href=""></a></p>
             </div>
         </section>
     </main>
     <footer>
         <div class="footer-container">
             <div class="footer-section">
-                <h3>Qui sommes nous ?</h3>
+                <h3>Qui sommes-nous ?</h3>
                 <p>L'univers de Handball Coach</p>
                 <p>Contact</p>
             </div>
@@ -62,7 +156,7 @@
                 <p>Nos offres</p>
             </div>
         </div>
-        <p class="copy">&copy; 2024 HandBapp. Tous droits réservés.</p>
+        <p class="copy">&copy; 2024 TakTik. Tous droits réservés.</p>
     </footer>
 </body>
 </html>
