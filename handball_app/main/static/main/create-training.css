@@ -3,3 +3,54 @@
     margin: 0;
     padding: 0;
 }
+
+.steps-section {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin: auto;
+    width: 90%;
+    max-width: 1200px;
+    padding: 50px 0;
+    border-radius: 15px;
+}
+
+.step {
+    position: relative;
+    width: 30%;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.step-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 60px;
+    font-weight: bold;
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    color: #034242;
+}
+
+.step-number1 {
+    color: #00B3BF;
+}
+
+.step-number2 {
+    color: #fa8787;
+}
+
+.step-number3 {
+    color: #034242;
+}
+
+.step p {
+    font-size: 18px;
+    line-height: 1.4;
+    margin: 20px 0;
+    position: relative;
+    z-index: 1;
+}
