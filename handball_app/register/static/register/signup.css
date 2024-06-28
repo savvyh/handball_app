@@ -3,85 +3,92 @@
     margin: 0;
     padding: 0;
 }
+
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #fff;
-    color: #333;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f9f9f9;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: #333;
 }
 
 .container {
-    text-align: center;
-    width: 400px;
-    border: 1px solid #00B3BF;
+    width: 600px;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 179, 191, 0.5);
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #FF0099;
+    font-size: 28px;
+    color: #2C3E50;
+    position: absolute;
+    top: 15px;
+    left: 20px;
 }
 
 .ballon {
     width: 50px;
     height: 50px;
+    position: absolute;
+    top: 10px;
+    right: 20px;
 }
 
 main {
-    margin-top: 20px;
+    margin-top: 80px;
+}
+
+h2, h3 {
+    color: #2C3E50;
 }
 
 h2 {
     font-size: 24px;
-    color: #2C3E50;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 20px;
     margin-bottom: 20px;
 }
 
-form {
+.form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.error-messages {
-    color: red;
-    font-weight: bold;
-    font-size: 12px;
-    margin-bottom: 20px;
-}
-
-.error-messages ul {
-    list-style: none;
-}
-
 .field {
+    width: 60%;
     margin-bottom: 15px;
-    width: 100%;
+    position: relative;
 }
 
 .field label {
     display: block;
-    margin-bottom: 5px;
     font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.field i {
+    position: absolute;
+    top: 38px;
+    left: 10px;
+    color: #ccc;
 }
 
 .field input {
     width: 100%;
-    padding: 10px;
+    padding: 10px 10px 10px 30px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 14px;
 }
 
 .button1 {
@@ -92,8 +99,24 @@ form {
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
+    transition: opacity 0.3s;
 }
 
 .button1:hover {
     opacity: 0.9;
+}
+
+.error-messages {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.error-messages ul {
+    list-style: none;
+    padding: 0;
+}
+
+.error-messages li {
+    margin-bottom: 5px;
 }

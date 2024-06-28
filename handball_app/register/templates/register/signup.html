@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'register/signup.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -17,9 +18,11 @@
             <img src="{% static 'main/ballon.png' %}" alt="Logo" class="ballon">
         </header>
         <main>
-            <h2>S'inscrire</h2>
+            <h2>Bienvenue chez TakTik !</h2>
+            <h3>S'inscrire</h3>
             <form class="form" method="post">
                 {% csrf_token %}
+
                 {% if form.errors %}
                     <div class="error-messages">
                         <ul>
@@ -35,25 +38,26 @@
                     </div>
                 {% endif %}
                 <div class="field">
-                    {{ form.username.label_tag }}
+                    <label for="id_username"><i class="fas fa-user"></i> Nom d'utilisateur :</label>
                     {{ form.username }}
                 </div>
                 <div class="field">
-                    {{ form.password1.label_tag }}
+                    <label for="id_password1"><i class="fas fa-lock"></i> Mot de passe :</label>
                     {{ form.password1 }}
                 </div>
                 <div class="field">
-                    {{ form.password2.label_tag }}
+                    <label for="id_password2"><i class="fas fa-lock"></i> Confirmation du mot de passe :</label>
                     {{ form.password2 }}
                 </div>
                 <div class="field">
-                    {{ form.email.label_tag }}
+                    <label for="id_email"><i class="fas fa-envelope"></i> Email :</label>
                     {{ form.email }}
                 </div>
                 <button class="button1" type="submit">Je m'inscris</button>
             </form>
         </main>
-        <footer></footer>
+        <footer>
+        </footer>
     </div>
 </body>
 </html>
