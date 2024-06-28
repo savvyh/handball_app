@@ -57,6 +57,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'handball_app.wsgi.application'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
