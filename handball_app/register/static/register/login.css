@@ -1,0 +1,134 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+.container {
+    width: 600px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.logo {
+    font-size: 28px;
+    color: #2C3E50;
+    position: absolute;
+    top: 15px;
+    left: 20px;
+}
+
+.ballon {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+main {
+    margin-top: 80px;
+}
+
+#heading {
+    font-size: 24px;
+    color: #2C3E50;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #2C3E50;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.field {
+    width: 60%;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.field i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.field input::placeholder {
+    color: #aaa;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 15px;
+    text-align: left;
+}
+
+.btn {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin-bottom: 15px;
+}
+
+.button1 {
+    background: linear-gradient(135deg, #00B3BF, #f1c1d1, #FF0000);
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.3s;
+    margin: 0 auto;
+}
+
+.button1:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.button3 {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #2C3E50;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.button3:hover {
+    color: #ff0000;
+}
