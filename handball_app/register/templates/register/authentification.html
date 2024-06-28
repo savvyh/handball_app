@@ -2,28 +2,77 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Authentification</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>S'identifier</title>
     <link rel="stylesheet" type="text/css" href="{% static 'register/authentification.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h2>Authentification</h2>
+        <header>
+            <h1 class="logo">TakTik</h1>
+            <img src="{% static 'main/ballon.png' %}" alt="Logo" class="ballon">
+        </header>
+        <div class="content">
+            <h2>Connectez-vous à votre espace personnel</h2>
+            <p>Pas encore inscrit ? Inscrivez-vous dès maintenant via le formulaire d'inscription</p>
+        </div>
         <div class="forms">
             <div class="login-form">
-                <h3>Se connecter</h3>
+                <h3><i class="fas fa-sign-in-alt"></i> Se connecter</h3>
                 <form method="post" action="{% url 'login' %}">
                     {% csrf_token %}
-                    {{ form_login.as_p }}
-                    <button type="submit">Se connecter</button>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        {{ form_login.username }}
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        {{ form_login.password }}
+                    </div>
+                    <button type="submit"><i class="fas fa-sign-in-alt"></i> Se connecter</button>
                 </form>
             </div>
             <div class="register-form">
-                <h3>S'inscrire</h3>
-                <form method="post" action="{% url 'register' %}">
+                <h3><i class="fas fa-user-plus"></i> S'inscrire</h3>
+                <form class="form" method="post" action="{% url 'signup' %}">
                     {% csrf_token %}
-                    {{ form_register.as_p }}
-                    <button type="submit">S'inscrire</button>
+
+                    {% if form_register.errors %}
+                        <div class="error-messages">
+                            <ul>
+                                {% for field in form_register %}
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in form_register.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    <div class="field">
+                        <label for="id_username"><i class="fas fa-user"></i> Nom d'utilisateur :</label>
+                        {{ form_register.username }}
+                    </div>
+                    <div class="field">
+                        <label for="id_email"><i class="fas fa-envelope"></i> Email :</label>
+                        {{ form_register.email }}
+                    </div>
+                    <div class="field">
+                        <label for="id_password1"><i class="fas fa-lock"></i> Mot de passe :</label>
+                        {{ form_register.password1 }}
+                    </div>
+                    <div class="field">
+                        <label for="id_password2"><i class="fas fa-lock"></i> Confirmation du mot de passe :</label>
+                        {{ form_register.password2 }}
+                    </div>
+                    <button class="button1" type="submit"><i class="fas fa-user-plus"></i> S'inscrire</button>
                 </form>
             </div>
         </div>
