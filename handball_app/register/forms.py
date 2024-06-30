@@ -1,11 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from main.models import User
+from main.models import CATEGORY_CHOICES, User, Profile, Category
 
 class CustomUserCreationForm(UserCreationForm):
-    """
-    Formulaire de création d'utilisateur avec des messages d'erreur personnalisés.
-    """
     username = forms.CharField(
         max_length=15,
         label="Nom d'utilisateur",
@@ -54,18 +51,11 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
-
 class CustomLoginForm(forms.Form):
-    """
-    Formulaire de connexion
-    """
     username = forms.CharField(max_length=15, label="Nom d'utilisateur")
     password = forms.CharField(widget=forms.PasswordInput, label="Mot de passe")
 
 class UserUpdateForm(forms.ModelForm):
-    """
-    Formulaire pour la mise à jour des informations utilisateur.
-    """
     email = forms.EmailField(
         required=True,
         error_messages={

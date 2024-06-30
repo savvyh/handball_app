@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+
 from .forms import CustomUserCreationForm, CustomLoginForm, UserUpdateForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -12,6 +13,9 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.is_admin = True
+            user.profile_limit = 10
+            user.save()
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
@@ -43,12 +47,10 @@ def login_view(request):
         form = CustomLoginForm()
     return render(request, 'register/login.html', {'form': form})
 
-
 def authentification(request):
     form_login = CustomLoginForm()
     form_register = CustomUserCreationForm()
     return render(request, 'register/authentification.html', {'form_login': form_login, 'form_register': form_register})
-
 
 def logout_view(request):
     logout(request)
