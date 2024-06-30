@@ -21,15 +21,26 @@ class Category(models.Model):
         return self.name
 
 class User(AbstractUser):
-    username = models.CharField(max_length=100, unique=True, default='default_username')
-    categories = models.ManyToManyField(Category)
+    is_admin = models.BooleanField(default=False)
+    profile_limit = models.PositiveIntegerField(default=1)
+    categories = models.ManyToManyField(Category, blank=True)
     personal_informations = models.TextField(blank=True, null=True)
     account_pref = models.CharField(max_length=100, blank=True, null=True)
+    profile_completed = models.BooleanField(default=False)
+
+    def can_add_profile(self):
+        return self.profiles.count() < self.profile_limit
+
+class Profile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profiles')
+    name = models.CharField(max_length=255)
+    categories = models.ManyToManyField(Category)
+    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
 
 class TrainingSession(models.Model):
     session_title = models.CharField(max_length=100)
     exercise = models.CharField(max_length=100)
-    category = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     session_time = models.CharField(max_length=100)
     session_date = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -47,4 +58,3 @@ class SessionTracking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     training_session = models.ForeignKey(TrainingSession, on_delete=models.CASCADE)
     theme = models.CharField(max_length=100)
-
