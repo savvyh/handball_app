@@ -1,19 +1,19 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main/home.css' %}">
     <title>Accueil</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="title-nav">
                 <h1>TakTik</h1>
-                <img src="{% static 'main/ballon.png' %}" alt="Logo" class="ballon">
             </div>
             <div class="search-bar">
                 <input type="text" placeholder="Que cherchez-vous ?">
@@ -26,7 +26,6 @@
                     <a href="#">Mon Espace</a>
                     <ul class="dropdown-content">
                         <li><a href="{% url 'settings' %}">Paramètres</a></li>
-                        <li><a href="{% url 'account' %}">Mon Compte</a></li>
                         <li><a href="{% url 'club' %}">Espace Club</a></li>
                         <li><a href="{% url 'logout' %}">Déconnexion</a></li>
                     </ul>
@@ -37,12 +36,28 @@
             </div>
         </nav>
     </header>
-    <div>
-        <h1>Bienvenue dans ton espace personnel Coach</h1>
-    </div>
-    <div>
-        <h3>Prêt à commencer la séance d'entraînement?</h3>
-        <button><a href="{% url 'create-training' %}">Je crée ma séance</a></button>
+    <div class="profile-selection-section">
+        <h1>Qui va s'entraîner aujourd'hui ?</h1>
+        <div class="profiles-grid">
+            {% for profile in profiles %}
+            <div class="profile">
+                <a href="{% url 'personal_space' profile.id %}">
+                    {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
+                    {% else %}
+                        <i class="fas fa-user-circle default-profile-icon"></i>
+                    {% endif %}
+                    <p>{{ profile.name }}</p>
+                </a>
+            </div>
+            {% endfor %}
+            <div class="profile add-profile">
+                <a href="{% url 'create_profile' %}">
+                    <i class="fas fa-plus-circle add-profile-icon"></i>
+                    <p>Ajouter un profil</p>
+                </a>
+            </div>
+        </div>
     </div>
 </body>
 </html>

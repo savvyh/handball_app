@@ -9,12 +9,13 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f7f7f7;
 }
 
 header {
     background-color: #fff;
     padding: 10px 20px;
-    border-bottom: 1px solid #f1f1f1;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .navbar {
@@ -23,9 +24,14 @@ header {
     justify-content: space-between;
 }
 
-.logo h1 {
+.title-nav {
+    display: flex;
+    align-items: center;
+}
+
+.title-nav h1 {
     font-family: 'Anton', sans-serif;
-    color: #FF1493; /* Couleur rose */
+    color: #2C3E50;
     margin: 0;
 }
 
@@ -38,9 +44,9 @@ header {
 .search-bar input {
     width: 80%;
     max-width: 400px;
-    padding: 5px 10px;
+    padding: 10px 15px;
     border: 1px solid #ccc;
-    border-radius: 20px;
+    border-radius: 25px;
     font-size: 16px;
 }
 
@@ -52,8 +58,8 @@ header {
 }
 
 .nav-links li {
-    margin: 0 10px;
-    position: relative; /* Nécessaire pour le positionnement du menu déroulant */
+    margin: 0 15px;
+    position: relative;
 }
 
 .nav-links a {
@@ -63,11 +69,11 @@ header {
 }
 
 .dropdown:hover .dropdown-content {
-    display: block; /* Affiche le menu déroulant lors du survol */
+    display: block;
 }
 
 .dropdown-content {
-    display: none; /* Masque le menu déroulant par défaut */
+    display: none;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
@@ -96,4 +102,69 @@ header {
 
 .menu-icon span {
     font-size: 24px;
+}
+
+.profile-selection-section {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.profile-selection-section h1 {
+    font-size: 2.5em;
+    color: #2C3E50;
+    margin-bottom: 40px;
+}
+
+.profiles-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.profile {
+    text-align: center;
+    transition: transform 0.3s;
+    width: 150px;
+}
+
+.profile img, .default-profile-icon, .add-profile-icon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+}
+
+.default-profile-icon, .add-profile-icon {
+    font-size: 150px;
+    color: #ccc;
+}
+
+.profile p {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.profile a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.profile:hover {
+    transform: scale(1.05);
+}
+
+.profile:hover img, .profile:hover .default-profile-icon, .profile:hover .add-profile-icon {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.add-profile .add-profile-icon {
+    color: #999;
+}
+
+.add-profile:hover .add-profile-icon {
+    color: #666;
 }
