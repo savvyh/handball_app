@@ -4,28 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'main/create-training.css'}">
+    <link rel="stylesheet" href="{% static 'main/create-training.css' %}">
     <title>Créer ma séance</title>
 </head>
 <body>
+    <header>
+        <nav class="navbar">
+            <div class="title-nav">
+                <h1>TakTik</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Que cherchez-vous ?">
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="#">Bibliothèque</a></li>
+                <li><a href="#">Ressources</a></li>
+                <li class="dropdown">
+                    <a href="#">Mon Espace</a>
+                    <ul class="dropdown-content">
+                        <li><a href="{% url 'settings' %}">Paramètres</a></li>
+                        <li><a href="{% url 'club' %}">Espace Club</a></li>
+                        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="menu-icon">
+                <span>&#9776;</span>
+            </div>
+        </nav>
+    </header>
     <div class="container">
-        <h1>Je crée ma séance</h1>
+        <h1 class="title-section">Je crée ma séance</h1>
+        <div class="content">
+            <section class="steps-section">
+                <div class="step step-1">
+                    <div class="step-number step-number1">1</div>
+                    <p>Choisis le thème de ta séance.</p>
+                </div>
+                <div class="step step-2">
+                    <div class="step-number step-number2">2</div>
+                    <p>Sélectionne le contenu qui te sera proposé, adapté aux besoins du thème de ta séance.</p>
+                </div>
+                <div class="step step-3">
+                    <div class="step-number step-number3">3</div>
+                    <p>Télécharge ta séance détaillée.</p>
+                </div>
+            </section>
+            <div class="image-container">
+                <img class="handballeur" src="{% static 'main/handballeur-trait.png' %}" alt="handballeur">
+                <a href="{% url 'create-training' %}" class="start-button">
+                    COMMENCER 🚀
+                    <span class="arrow-wrapper">
+                        <span class="arrow"></span>
+                    </span>
+                </a>
+            </div>
+        </div>
     </div>
-    <img class="handballeur" src="{% static 'main/handballeur-trait.png' %}" alt="handballeur">
-    <section class="steps-section">
-    <div class="step step-1">
-        <div class="step-number step-number1">1</div>
-        <p>Choisis le thème de ta séance adapté à ton collectif.</p>
-    </div>
-    <div class="step step-2">
-        <div class="step-number step-number2">2</div>
-        <p>Aide-toi du chatbot ou rends-toi directement dans la bibliothèque pour choisir tes exercices.</p>
-    </div>
-    <div class="step step-3">
-        <div class="step-number step-number3">3</div>
-        <p>Télécharge ta séance détaillée pour organiser au mieux ton entraînement.</p>
-    </div>
-</section>
 </body>
 </html>
-
