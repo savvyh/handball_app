@@ -10,5 +10,6 @@ urlpatterns = [
     path('personal_space/<int:profile_id>/', views.personal_space, name='personal_space'),
     path('club/', views.club, name='club'),
     path('create-training/', views.create_training, name='create-training'),
+    path('training/', views.training, name='training'),
     path('create-profile/', views.create_profile, name='create_profile'),
 ]
