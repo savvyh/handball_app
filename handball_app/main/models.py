@@ -52,14 +52,14 @@ class Personalisation(models.Model):
         label="Insérer un nouveau type d'exercice"
 
         def __str__(self):
-            return self.verbal_name
+            return self.title
 
     class Theme(models.Model):
         title = models.CharField(max_length=100)
         label="Insérer un nouveau thème de séance"
 
         def __str__(self):
-            return self.verbal_name
+            return self.title
 
 class Multimedia(models.Model):
     title = models.CharField(max_length=100)
