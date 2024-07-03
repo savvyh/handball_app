@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
@@ -19,7 +20,10 @@ def subscribe(request):
 
 @login_required
 def personal_space(request, profile_id):
-    profile = Profile.objects.get(id=profile_id, user=request.user)
+    try:
+        profile = Profile.objects.get(id=profile_id, user=request.user)
+    except Profile.DoesNotExist:
+        raise Http404("Profile does not exist")
     return render(request, 'main/personal_space.html', {'profile': profile})
 
 def club(request):
