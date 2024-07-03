@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.validators import FileExtensionValidator
 
 CATEGORY_CHOICES = [
     ('mini_hand', 'Mini Hand'),
@@ -45,14 +46,29 @@ class TrainingSession(models.Model):
     session_date = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+class Personalisation(models.Model):
+    class Exercice(models.Model):
+        title = models.CharField(max_length=100)
+        label="Insérer un nouveau type d'exercice"
+
+        def __str__(self):
+            return self.verbal_name
+
+    class Theme(models.Model):
+        title = models.CharField(max_length=100)
+        label="Insérer un nouveau thème de séance"
+
+        def __str__(self):
+            return self.verbal_name
+
 class Multimedia(models.Model):
-    content_title = models.CharField(max_length=100)
-    content_description = models.TextField()
-    content_type = models.CharField(max_length=50)
-    exercice_type = models.CharField(max_length=50)
-    theme = models.CharField(max_length=100)
-    url = models.URLField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    exercise = models.ManyToManyField(Personalisation.Exercice)
+    theme = models.ManyToManyField(Personalisation.Theme)
+    video = models.FileField(upload_to='videos_uploaded', null=True,
+                             validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class SessionTracking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
