@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib.auth.decorators import login_required
 
+
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -21,7 +22,7 @@ def signup(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('create_profile')
         else:
             for field, errors in form.errors.items():
                 for error in errors:
@@ -29,7 +30,6 @@ def signup(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'register/signup.html', {'form': form})
-
 
 def login_view(request):
     if request.method == 'POST':
