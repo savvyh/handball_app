@@ -35,6 +35,9 @@ def settings(request):
 def create_training(request):
     return render(request, 'main/create-training.html')
 
+def training(request):
+    return render(request, 'main/training.html')
+
 @login_required
 def create_profile(request):
     if not request.user.can_add_profile():
