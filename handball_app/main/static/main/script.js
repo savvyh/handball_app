@@ -46,4 +46,9 @@ $(document).ready(function() {
                                     .map(checkbox => checkbox.dataset.value);
         selectedCategoriesInput.value = selectedValues.join(',');
     }
+
+    // S'assurer que les catégories sont mises à jour avant la soumission du formulaire
+    document.querySelector('.form').addEventListener('submit', function(event) {
+        updateSelectedCategories();
+    });
 });

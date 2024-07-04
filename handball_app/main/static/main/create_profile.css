@@ -24,6 +24,14 @@ body {
     position: relative;
 }
 
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 15px;
+    text-align: left;
+}
+
 header {
     display: flex;
     justify-content: space-between;

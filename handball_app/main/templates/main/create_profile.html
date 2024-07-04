@@ -20,30 +20,41 @@
             <h2>Créer un nouveau profil</h2>
             <form class="form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.non_field_errors }}
                 <div class="field">
                     <label for="id_name"><i class="fas fa-user"></i> Nom du profil :</label>
-                    {{ form.name.errors }}
                     {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="error-message">
+                            {% for error in form.name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="field">
                     <label><i class="fas fa-users"></i> Catégorie entraînée (plusieurs choix possibles) :</label>
                     <div class="checkbox-group">
-                        {% for checkbox in form.categories %}
-                            <div class="checkbox" data-value="{{ checkbox.choice_value }}">
-                                <span>{{ checkbox.choice_label }}</span>
+                        {% for category in categories %}
+                            <div class="checkbox" data-value="{{ category.id }}">
+                                <span>{{ category.name }}</span>
                             </div>
                         {% endfor %}
                     </div>
                 </div>
                 <div class="field">
                     <label for="id_profile_image"><i class="fas fa-image"></i> Photo de profil (facultatif) :</label>
-                    {{ form.profile_image.errors }}
                     {{ form.profile_image }}
                 </div>
                 <input type="hidden" name="categories" id="selected-categories">
                 <button class="button" type="submit">Créer le Profil</button>
             </form>
+            {% if form.non_field_errors %}
+                <div class="error-message">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
         </main>
     </div>
 </body>
