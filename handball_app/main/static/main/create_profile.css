@@ -76,42 +76,34 @@ h2 {
     font-size: 14px;
 }
 
-/* Styles pour les checkboxes */
 .checkbox-group {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    justify-content: space-between;
 }
 
 .checkbox {
-    position: relative;
+    width: calc(33.333% - 10px);
     display: flex;
     align-items: center;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.checkbox input {
-    opacity: 0;
-    position: absolute;
-}
-
-.checkbox label {
-    padding: 10px 20px;
+    justify-content: center;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.checkbox input:checked + label {
+.checkbox.selected {
     background-color: #00B3BF;
     color: white;
     border-color: #00B3BF;
 }
 
-.checkbox input:focus + label {
-    outline: 2px solid #00B3BF;
-    outline-offset: 2px;
+.checkbox:hover {
+    background-color: #e0f7fa;
 }
 
 .button {

@@ -6,6 +6,9 @@
     <title>Créer un Profil</title>
     <link rel="stylesheet" type="text/css" href="{% static 'main/create_profile.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script defer src="{% static 'main/script.js' %}"></script>
 </head>
 <body>
     <div class="container">
@@ -17,20 +20,28 @@
             <h2>Créer un nouveau profil</h2>
             <form class="form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
+                {{ form.non_field_errors }}
                 <div class="field">
                     <label for="id_name"><i class="fas fa-user"></i> Nom du profil :</label>
+                    {{ form.name.errors }}
                     {{ form.name }}
                 </div>
                 <div class="field">
-                    <label for="id_categories"><i class="fas fa-users"></i> Catégorie entraînée (plusieurs choix possibles) :</label>
+                    <label><i class="fas fa-users"></i> Catégorie entraînée (plusieurs choix possibles) :</label>
                     <div class="checkbox-group">
-                        {{ form.categories }}
+                        {% for checkbox in form.categories %}
+                            <div class="checkbox" data-value="{{ checkbox.choice_value }}">
+                                <span>{{ checkbox.choice_label }}</span>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="field">
                     <label for="id_profile_image"><i class="fas fa-image"></i> Photo de profil (facultatif) :</label>
+                    {{ form.profile_image.errors }}
                     {{ form.profile_image }}
                 </div>
+                <input type="hidden" name="categories" id="selected-categories">
                 <button class="button" type="submit">Créer le Profil</button>
             </form>
         </main>
