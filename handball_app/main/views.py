@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from .models import Profile, CATEGORY_CHOICES
+from .models import Profile, Category
 from .forms import ProfileCreationForm
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -43,20 +43,22 @@ def create_profile(request):
     if not request.user.can_add_profile():
         return redirect('home')
     if request.method == 'POST':
-        form = ProfileCreationForm(request.POST, request.FILES)
+        form = ProfileCreationForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
-            selected_categories = request.POST.getlist('categories')
+            selected_categories = request.POST.get('categories').split(',')
             profile.categories.set(selected_categories)
+            profile.save()
             request.user.profile_completed = True
             request.user.save()
             return redirect('home')
     else:
-        form = ProfileCreationForm()
-    categories = CATEGORY_CHOICES
+        form = ProfileCreationForm(user=request.user)
+    categories = Category.objects.all()
     return render(request, 'main/create_profile.html', {'form': form, 'categories': categories})
+
 
 class ProfileCreateView(CreateView):
     model = Profile
