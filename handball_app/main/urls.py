@@ -12,5 +12,5 @@ urlpatterns = [
     path('create-training/', views.create_training, name='create-training'),
     path('training/', views.training, name='training'),
     path('create-profile/', views.create_profile, name='create_profile'),
-    path('library', views.library, name='library'),
+    path('library/', views.library, name='library'),
 ]
