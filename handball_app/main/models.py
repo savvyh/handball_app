@@ -3,7 +3,6 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 
 CATEGORY_CHOICES = [
-    ('mini_hand', 'Mini Hand'),
     ('-9', '-9'),
     ('-11F', '-11F'),
     ('-11G', '-11G'),
@@ -46,29 +45,32 @@ class TrainingSession(models.Model):
     session_date = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-class Personalisation(models.Model):
-    class Exercice(models.Model):
-        title = models.CharField(max_length=100)
-        label="Insérer un nouveau type d'exercice"
+class Theme(models.Model):
+    name = models.CharField(max_length=100)
 
-        def __str__(self):
-            return self.title
+    def __str__(self):
+        return self.name
 
-    class Theme(models.Model):
-        title = models.CharField(max_length=100)
-        label="Insérer un nouveau thème de séance"
+class Exercise(models.Model):
+    title = models.CharField(max_length=100)
 
-        def __str__(self):
-            return self.title
+    def __str__(self):
+        return self.title
 
 class Multimedia(models.Model):
     title = models.CharField(max_length=100)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='multimedia', default=1)
     description = models.TextField()
-    exercise = models.ManyToManyField(Personalisation.Exercice)
-    theme = models.ManyToManyField(Personalisation.Theme)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='exercises', default=1)
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50, default='-9')
     video = models.FileField(upload_to='videos_uploaded', null=True,
                              validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
+    video_time = models.CharField(max_length=50, default='00:00:00')
+    other_file = models.FileField(upload_to='files/', blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 
 class SessionTracking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
