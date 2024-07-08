@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliothèque</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'main/library.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="title-nav">
+                <h1>TakTik</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Que cherchez-vous ?">
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="{% url 'library' %}">Bibliothèque</a></li>
+                <li><a href="#">Ressources</a></li>
+                <li class="dropdown">
+                    <a href="#">Mon Espace</a>
+                    <ul class="dropdown-content">
+                        <li><a href="{% url 'settings' %}">Paramètres</a></li>
+                        <li><a href="{% url 'club' %}">Espace Club</a></li>
+                        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="menu-icon">
+                <span>&#9776;</span>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <h1 class="title">BIBLIOTHÈQUE</h1>
+    </div>
+    <div class="tab-menu">
+        <a href="#">Tout</a>
+        <a href="#">Echauffement</a>
+        <a href="#">Défense</a>
+        <a href="#">Attaque</a>
+        <a href="#">Dribbles</a>
+        <a href="#">Tirs</a>
+        <a href="#">Passes</a>
+        <a href="#">Physique</a>
+        <a href="#">Spécifiques</a>
+        <a href="#">Gestes techniques</a>
+    </div>
+</body>
+</html>
