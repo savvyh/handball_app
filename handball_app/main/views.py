@@ -35,6 +35,9 @@ def settings(request):
 def create_training(request):
     return render(request, 'main/create-training.html')
 
+def library(request):
+    return render(request, 'main/library.html')
+
 def training(request):
     return render(request, 'main/training.html')
 
