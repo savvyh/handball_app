@@ -62,7 +62,7 @@ class Multimedia(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='multimedia', default=1)
     description = models.TextField()
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='exercises', default=1)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50, default='-9')
+    categories = models.ManyToManyField(Category)
     video = models.FileField(upload_to='videos_uploaded', null=True,
                              validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
     video_time = models.CharField(max_length=50, default='00:00:00')
