@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Profile, Category, Exercise, Multimedia, THEME_CHOICES
+from .models import Profile, Category, Exercise, Multimedia, Theme
 
 class ProfileCreationForm(forms.ModelForm):
     categories = forms.ModelMultipleChoiceField(
@@ -29,9 +29,10 @@ class MultimediaCreationForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         label="Catégories"
     )
-    theme = forms.ChoiceField(
-        choices=THEME_CHOICES,
-        label="Thème"
+    theme = forms.ModelMultipleChoiceField(
+        queryset=Theme.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label="Thèmes"
     )
 
     class Meta:
