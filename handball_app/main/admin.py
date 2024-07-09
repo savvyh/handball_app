@@ -4,9 +4,8 @@ from .forms import MultimediaCreationForm
 
 class MultimediaAdmin(admin.ModelAdmin):
     form = MultimediaCreationForm
-    list_display = ['title', 'exercise', 'theme', 'video_time']
+    list_display = ['title', 'exercise', 'video_time']
     search_fields = ['title', 'exercise']
-
 
 admin.site.register(User)
 admin.site.register(Category)

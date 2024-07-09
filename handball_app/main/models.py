@@ -14,6 +14,16 @@ CATEGORY_CHOICES = [
     ('-18G', '-18G'),
 ]
 
+THEME_CHOICES = [
+    ('Tout', 'TOUT'),
+    ('Echauffement', 'ÉCHAUFFEMENT'),
+    ('Motricite', 'MOTRICITÉ'),
+    ('Attaque', 'ATTAQUE'),
+    ('Defense', 'DÉFENSE'),
+    ('Techniques', 'TECHNIQUES'),
+    ('Specifique', 'SPÉCIFIQUE'),
+]
+
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -46,7 +56,7 @@ class TrainingSession(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Theme(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, choices=THEME_CHOICES, default='Tout')
 
     def __str__(self):
         return self.name
@@ -61,7 +71,7 @@ class Multimedia(models.Model):
     title = models.CharField(max_length=100)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='multimedia', default=1)
     description = models.TextField()
-    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='exercises', default=1)
+    theme = models.CharField(Theme, max_length=100)
     categories = models.ManyToManyField(Category)
     video = models.FileField(upload_to='videos_uploaded', null=True,
                              validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
