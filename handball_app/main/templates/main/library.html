@@ -39,16 +39,22 @@
         <h1 class="title">BIBLIOTHÈQUE</h1>
     </div>
     <div class="tab-menu">
-        <a href="#">Tout</a>
-        <a href="#">Echauffement</a>
-        <a href="#">Défense</a>
-        <a href="#">Attaque</a>
-        <a href="#">Dribbles</a>
-        <a href="#">Tirs</a>
-        <a href="#">Passes</a>
-        <a href="#">Physique</a>
-        <a href="#">Spécifiques</a>
-        <a href="#">Gestes techniques</a>
+        <a href="?theme=Tout">Tout</a>
+        {% for theme in themes %}
+            <a href="?theme={{ theme.name }}">{{ theme.name }}</a>
+        {% endfor %}
+    </div>
+    <div class="grid-container">
+        {% for item in multimedia %}
+            <div class="grid-item">
+                <h2>{{ item.title }}</h2>
+                <p>{{ item.exercise.description }}</p>
+                <video src="{{ item.video.url }}" controls></video>
+                {% if item.other_file %}
+                    <a href="{{ item.other_file.url }}">Télécharger le fichier associé</a>
+                {% endif %}
+            </div>
+        {% endfor %}
     </div>
 </body>
 </html>
