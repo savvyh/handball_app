@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from .models import Profile, Category
+from .models import Multimedia, Profile, Category, Theme
 from .forms import ProfileCreationForm
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -36,7 +36,13 @@ def create_training(request):
     return render(request, 'main/create-training.html')
 
 def library(request):
-    return render(request, 'main/library.html')
+    theme_filter = request.GET.get('theme', 'Tout')
+    if theme_filter == 'Tout':
+        multimedia = Multimedia.objects.all()
+    else:
+        multimedia = Multimedia.objects.filter(exercise__theme__name=theme_filter)
+    themes = Theme.objects.all()
+    return render(request, 'main/library.html', {'multimedia': multimedia, 'themes': themes, 'current_theme': theme_filter})
 
 def training(request):
     return render(request, 'main/training.html')
