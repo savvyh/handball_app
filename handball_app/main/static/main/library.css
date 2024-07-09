@@ -6,6 +6,8 @@
 
 body {
     font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
 }
 
 header {
@@ -103,16 +105,17 @@ header {
 .title {
     text-align: center;
     margin: 20px 0;
-    font-size: 2rem;
-    color: #333;
+    font-size: 2.5rem;
+    color: #2C3E50;
 }
 
 .tab-menu {
     display: flex;
     justify-content: center;
-    background-color: #f8f8f8;
+    background-color: #fff;
     padding: 10px 0;
     border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
 }
 
 .tab-menu a {
@@ -130,7 +133,7 @@ header {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
     max-width: 1200px;
@@ -139,40 +142,63 @@ header {
 
 .grid-item {
     position: relative;
-    overflow: hidden;
     border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    background-color: #fff;
 }
 
-.grid-item img {
+.grid-item:hover {
+    transform: scale(1.05);
+}
+
+.grid-item .video-container {
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    background-color: #fff;
+}
+
+.grid-item .video-container video {
     width: 100%;
     height: auto;
     display: block;
 }
 
-.grid-item video {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
+.grid-item .info {
+    padding: 10px;
+    background-color: #fff;
     border-radius: 10px;
-}
-
-.grid-item .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    max-height: 0;
     opacity: 0;
-    transition: opacity 0.3s;
+    overflow: hidden;
+    position: relative;
 }
 
-.grid-item:hover .overlay {
+.grid-item:hover .info {
+    max-height: 500px; /* Adjust according to the expected content height */
     opacity: 1;
+    margin-top: 10px;
+}
+
+.grid-item .info h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.grid-item .info p {
+    margin: 5px 0;
+}
+
+.grid-item .info a {
+    color: #007bff;
+    text-decoration: underline;
+    margin-top: 10px;
+}
+
+.grid-item .info a:hover {
+    color: #0056b3;
 }
