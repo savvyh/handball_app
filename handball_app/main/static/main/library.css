@@ -126,7 +126,8 @@ header {
     padding: 5px 10px;
 }
 
-.tab-menu a:hover {
+.tab-menu a:hover,
+.tab-menu a.active {
     transition: 0.4s;
     color: #ff0000;
 }

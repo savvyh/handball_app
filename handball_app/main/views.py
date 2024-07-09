@@ -37,12 +37,18 @@ def create_training(request):
 
 def library(request):
     theme_filter = request.GET.get('theme', 'Tout')
+    
     if theme_filter == 'Tout':
         multimedia = Multimedia.objects.all()
     else:
-        multimedia = Multimedia.objects.filter(exercise__theme__name=theme_filter)
+        multimedia = Multimedia.objects.filter(theme__name=theme_filter)
+    
     themes = Theme.objects.all()
-    return render(request, 'main/library.html', {'multimedia': multimedia, 'themes': themes, 'current_theme': theme_filter})
+    return render(request, 'main/library.html', {
+        'multimedia': multimedia,
+        'themes': themes,
+        'current_theme': theme_filter
+    })
 
 def training(request):
     return render(request, 'main/training.html')

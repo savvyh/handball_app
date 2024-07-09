@@ -39,13 +39,13 @@
         <h1 class="title">BIBLIOTHÈQUE</h1>
     </div>
     <div class="tab-menu">
-        <a href="?theme=Tout">TOUT</a>
-        <a href="?theme=Echauffement">ÉCHAUFFEMENT</a>
-        <a href="?theme=Motricite">MOTRICITÉ</a>
-        <a href="?theme=Attaque">ATTAQUE</a>
-        <a href="?theme=Defense">DÉFENSE</a>
-        <a href="?theme=Techniques">TECHNIQUES</a>
-        <a href="?theme=Specifique">SPÉCIFIQUE</a>
+        <a href="?theme=Tout" {% if current_theme == 'Tout' %}class="active"{% endif %}>TOUT</a>
+        <a href="?theme=Echauffement" {% if current_theme == 'Echauffement' %}class="active"{% endif %}>ÉCHAUFFEMENT</a>
+        <a href="?theme=Motricite" {% if current_theme == 'Motricite' %}class="active"{% endif %}>MOTRICITÉ</a>
+        <a href="?theme=Attaque" {% if current_theme == 'Attaque' %}class="active"{% endif %}>ATTAQUE</a>
+        <a href="?theme=Defense" {% if current_theme == 'Defense' %}class="active"{% endif %}>DÉFENSE</a>
+        <a href="?theme=Techniques" {% if current_theme == 'Techniques' %}class="active"{% endif %}>TECHNIQUES</a>
+        <a href="?theme=Specifique" {% if current_theme == 'Specifique' %}class="active"{% endif %}>SPÉCIFIQUE</a>
     </div>
     <div class="grid-container">
         {% for item in multimedia %}
@@ -55,9 +55,8 @@
                 </div>
                 <div class="info">
                     <h2>{{ item.title }}</h2>
-                    <p>{{ item.exercise.description }}</p>
-                    <p>Catégories: {{ item.categories|join:", " }}</p>
-                    <p>Type d'exercice: {{ item.exercise.type }}</p>
+                    <p>{{ item.description }}</p>
+                    <p>Catégories: {{ item.categories.all|join:", " }}</p>
                     {% if item.other_file %}
                         <a href="{{ item.other_file.url }}">Télécharger le fichier associé</a>
                     {% endif %}
