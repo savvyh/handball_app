@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Category
+from .models import Multimedia, Profile, Category
 
 class ProfileCreationForm(forms.ModelForm):
     categories = forms.ModelMultipleChoiceField(
@@ -21,3 +21,17 @@ class ProfileCreationForm(forms.ModelForm):
         if Profile.objects.filter(user=self.user, name=name).exists():
             raise forms.ValidationError("Ce nom de profil est déjà utilisé. Veuillez en choisir un autre.")
         return name
+
+class MultimediaCreationForm(forms.ModelForm):
+    categories = forms.ModelMultipleChoiceField(
+        queryset=Category.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label="Catégories"
+    )
+
+    class Meta:
+        model = Multimedia
+        fields = ['title', 'description', 'exercise', 'theme', 'categories', 'video', 'video_time', 'other_file', 'creator']
+
+    def __init__(self, *args, **kwargs):
+        super(MultimediaCreationForm, self).__init__(*args, **kwargs)
