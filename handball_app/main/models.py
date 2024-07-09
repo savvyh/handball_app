@@ -21,6 +21,8 @@ THEME_CHOICES = [
     ('Défense', 'DÉFENSE'),
     ('Techniques', 'TECHNIQUES'),
     ('Spécifique', 'SPÉCIFIQUE'),
+    ('Cohésion', 'COHÉSION'),
+    ('Physique', 'PHYSIQUE')
 ]
 
 class Category(models.Model):
