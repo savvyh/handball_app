@@ -1,11 +1,12 @@
 from django.http import Http404
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.urls import reverse_lazy
-from .models import Multimedia, Profile, Category, Theme
+from .models import Favorite, Multimedia, Profile, Category, Theme
 from .forms import ProfileCreationForm
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+
 
 def landing(request):
     return render(request, 'main/landing.html')
@@ -98,3 +99,26 @@ class ProfileListView(ListView):
 
     def get_queryset(self):
         return Profile.objects.filter(user=self.request.user)
+
+@login_required
+def add_favorite(request, multimedia_id):
+    multimedia = get_object_or_404(Multimedia, id=multimedia_id)
+    Favorite.objects.get_or_create(user=request.user, multimedia=multimedia)
+    return redirect('library')
+
+@login_required
+def remove_favorite(request, multimedia_id):
+    multimedia = get_object_or_404(Multimedia, id=multimedia_id)
+    Favorite.objects.filter(user=request.user, multimedia=multimedia).delete()
+    return redirect('library')
+
+@login_required
+def favorite_list(request):
+    favorites = Favorite.objects.filter(user=request.user)
+    return render(request, 'main/favorite_list.html', {'favorites': favorites})
+
+def admin_required(login_url=None):
+    return user_passes_test(lambda u: u.is_active and u.is_admin, login_url=login_url)
+
+def member_required(login_url=None):
+    return user_passes_test(lambda u: u.is_active and u.is_member, login_url=login_url)

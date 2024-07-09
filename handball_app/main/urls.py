@@ -13,4 +13,7 @@ urlpatterns = [
     path('training/', views.training, name='training'),
     path('create-profile/', views.create_profile, name='create_profile'),
     path('library/', views.library, name='library'),
+    path('add_favorite/<int:multimedia_id>/', views.add_favorite, name='add_favorite'),
+    path('remove_favorite/<int:multimedia_id>/', views.remove_favorite, name='remove_favorite'),
+    path('favorites/', views.favorite_list, name='favorite_list'),
 ]

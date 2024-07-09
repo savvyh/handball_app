@@ -31,6 +31,8 @@ class Category(models.Model):
 
 class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
+    is_member = models.BooleanField(default=False)
+    is_guest = models.BooleanField(default=True)
     profile_limit = models.PositiveIntegerField(default=1)
     categories = models.ManyToManyField(Category, blank=True)
     personal_informations = models.TextField(blank=True, null=True)
@@ -80,6 +82,17 @@ class Multimedia(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    multimedia = models.ForeignKey(Multimedia, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'multimedia')
+
+    def __str__(self):
+        return f'{self.user.username} - {self.multimedia.title}'
 
 class SessionTracking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

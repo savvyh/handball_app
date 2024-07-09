@@ -26,6 +26,7 @@
                     <ul class="dropdown-content">
                         <li><a href="{% url 'settings' %}">Paramètres</a></li>
                         <li><a href="{% url 'club' %}">Espace Club</a></li>
+                        <li><a href="{% url 'favorite_list' %}">Mes Favoris</a></li>
                         <li><a href="{% url 'logout' %}">Déconnexion</a></li>
                     </ul>
                 </li>
@@ -57,6 +58,13 @@
                     <h2>{{ item.title }}</h2>
                     <p>{{ item.description }}</p>
                     <p>Catégories: {{ item.categories.all|join:", " }}</p>
+                    {% if request.user.is_authenticated %}
+                        {% if item in user.favorites.all %}
+                            <a href="{% url 'remove_favorite' item.id %}">Supprimer des Favoris</a>
+                        {% else %}
+                            <a href="{% url 'add_favorite' item.id %}">Ajouter aux Favoris</a>
+                        {% endif %}
+                    {% endif %}
                     {% if item.other_file %}
                         <a href="{{ item.other_file.url }}">Télécharger le fichier associé</a>
                     {% endif %}
