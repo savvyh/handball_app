@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main/personal_space.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Mon Espace</title>
 </head>
 <body>
@@ -25,6 +26,7 @@
                     <ul class="dropdown-content">
                         <li><a href="{% url 'settings' %}">Paramètres</a></li>
                         <li><a href="{% url 'club' %}">Espace Club</a></li>
+                        <li><a href="{% url 'favorite_list' %}">Mes Favoris</a></li>
                         <li><a href="{% url 'logout' %}">Déconnexion</a></li>
                     </ul>
                 </li>
@@ -38,6 +40,32 @@
         <h1>Bienvenue dans votre espace personnel, {{ profile.name }}</h1>
         <p>Créez des séances complètes de A à Z en quelques clics!</p>
         <button type="button"><a href="{% url 'create-training' %}">Je crée ma séance</a></button>
+
+        <div class="sessions">
+            <h2>Mes Séances</h2>
+            <div class="sessions-list">
+                {% for session in sessions %}
+                    <div class="session-card">
+                        <div class="session-header">
+                            <h3>{{ session.title }}</h3>
+                            <div class="session-actions">
+                                <a href="#"><i class="fas fa-edit"></i></a>
+                                <a href="#"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                        <p>Catégorie: {{ session.category.name }}</p>
+                        <p>Durée: {{ session.duration }}</p>
+                        <p>Intensité: {{ session.intensity }}</p>
+                        <h4>Exercices :</h4>
+                        <ul>
+                            {% for exercise in session.exercises.all %}
+                                <li>{{ exercise.multimedia.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </body>
 </html>

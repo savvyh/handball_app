@@ -27,7 +27,8 @@ def personal_space(request, profile_id):
         profile = Profile.objects.get(id=profile_id, user=request.user)
     except Profile.DoesNotExist:
         raise Http404("Profile does not exist")
-    return render(request, 'main/personal_space.html', {'profile': profile})
+    sessions = TrainingSession.objects.filter(user=request.user)
+    return render(request, 'main/personal_space.html', {'profile': profile, 'sessions': sessions})
 
 def club(request):
     return render(request, 'main/club.html')
@@ -137,6 +138,9 @@ def save_training_session(request):
         except Category.DoesNotExist:
             return render(request, 'main/error.html', {'message': 'Catégorie non valide.'})
 
+        # Vérifier si l'utilisateur a un profil, sinon en créer un
+        profile, created = Profile.objects.get_or_create(user=request.user, defaults={'name': request.user.username})
+
         training_session = TrainingSession.objects.create(
             title=title, 
             category=category, 
@@ -149,7 +153,7 @@ def save_training_session(request):
             multimedia = Multimedia.objects.get(id=video_id)
             TrainingExercise.objects.create(training_session=training_session, multimedia=multimedia)
 
-        return redirect('training_list')
+        return redirect('personal_space', profile_id=profile.id)
 
 @login_required
 def create_profile(request):
