@@ -18,7 +18,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="{% url 'home' %}">Accueil</a></li>
-                <li><a href="#">Bibliothèque</a></li>
+                <li><a href="{% url 'library' %}">Bibliothèque</a></li>
                 <li><a href="#">Ressources</a></li>
                 <li class="dropdown">
                     <a href="#">Mon Espace</a>
@@ -34,26 +34,13 @@
             </div>
         </nav>
     </header>
-    <div class="step-1">
-        <h2>Thème de la séance</h2>
-        <div>
-            <p>Sélection par mots clés</p>
-            <!-- Comment intégrer des mots clés ? ils doivent être stocké dans la base de donnée ? Le but est que l'utilisateur clique sur des mots clés afin que les vidéos qui apparaitront dépendra du mot clé choisi -->
-        </div>
-        <div>
-            <p>Durée de l'entraînement</p>
-            <!-- Donner la possibilité de choisir entre 1H30 ou 2H. Le choix fait par l'utilisateur définira le nombre d'exercice à configurer dans la séance-->
-        </div>
-        <div>
-            <p>Intensité de l'entraînement</p>
-            <!-- Choix entre 'Veille de Match', 'Après Match', 'En semaine'. Le choix définira également le contenu suggérer-->
-        </div>
-    </div>
-    <div class="step-2">
-        <h2>Choix des vidéos</h2>
-        <div>
-            <!-- Les vidéos seront disponbile depuis la base de donnée-->
-        </div>
+    <div class="container">
+        <h2>Créer ma séance</h2>
+        <form method="post" action="{% url 'training' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Suivant</button>
+        </form>
     </div>
 </body>
 </html>

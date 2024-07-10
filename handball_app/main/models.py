@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import FileExtensionValidator
@@ -50,13 +51,6 @@ class Profile(models.Model):
     categories = models.ManyToManyField(Category)
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
 
-class TrainingSession(models.Model):
-    session_title = models.CharField(max_length=100)
-    exercise = models.CharField(max_length=100)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    session_time = models.CharField(max_length=100)
-    session_date = models.DateField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Theme(models.Model):
     name = models.CharField(max_length=100, choices=THEME_CHOICES, default='Échauffement')
@@ -85,6 +79,23 @@ class Multimedia(models.Model):
     def __str__(self):
         return self.title
 
+class TrainingSession(models.Model):
+    title = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    duration = models.CharField(max_length=10, choices=[('1h', '1h'), ('1h30', '1h30'), ('2h', '2h')], default='1h30')
+    intensity = models.CharField(max_length=10, choices=[('faible', 'Faible'), ('moyenne', 'Moyenne'), ('élevée', 'Élevée')], default='moyenne')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
+class TrainingExercise(models.Model):
+    training_session = models.ForeignKey(TrainingSession, related_name='exercises', on_delete=models.CASCADE)
+    multimedia = models.ForeignKey(Multimedia, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.training_session.title} - {self.multimedia.title}"
 
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

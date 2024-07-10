@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Profile, Category, Exercise, Multimedia, Theme
+from .models import Profile, Category, Exercise, Multimedia, Theme, TrainingSession
 
 class ProfileCreationForm(forms.ModelForm):
     categories = forms.ModelMultipleChoiceField(
@@ -41,3 +41,23 @@ class MultimediaCreationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MultimediaCreationForm, self).__init__(*args, **kwargs)
+
+
+class TrainingSessionForm(forms.ModelForm):
+    class Meta:
+        model = TrainingSession
+        fields = ['title', 'category', 'duration', 'intensity']
+
+class TrainingQuestionForm(forms.Form):
+    theme_choices = [
+        ('Attaque', 'Attaque'),
+        ('Défense', 'Défense'),
+        ('Techniques', 'Techniques'),
+        ('Spécifique', 'Spécifique'),
+        ('Cohésion', 'Cohésion'),
+        ('Physique', 'Physique')
+    ]
+    themes = forms.MultipleChoiceField(choices=theme_choices, widget=forms.CheckboxSelectMultiple, label="Qu'aimeriez-vous travailler aujourd'hui ? (Max 3 choix)")
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), label="Pour quelle catégorie ?")
+    duration = forms.ChoiceField(choices=[('1h', '1h'), ('1h30', '1h30'), ('2h', '2h')], label="Durée de l'entraînement")
+    intensity = forms.ChoiceField(choices=[('faible', 'Faible'), ('moyenne', 'Moyenne'), ('élevée', 'Élevée')], label="Intensité de l'entraînement")

@@ -1,9 +1,10 @@
+# views.py
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.urls import reverse_lazy
-from .models import Favorite, Multimedia, Profile, Category, Theme
-from .forms import ProfileCreationForm
+from .models import Favorite, Multimedia, Profile, Category, Theme, TrainingExercise, TrainingSession
+from .forms import ProfileCreationForm, TrainingQuestionForm
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
@@ -51,8 +52,62 @@ def library(request):
         'current_theme': theme_filter
     })
 
+@login_required
 def training(request):
-    return render(request, 'main/training.html')
+    if request.method == 'POST':
+        form = TrainingQuestionForm(request.POST)
+        if form.is_valid():
+            themes = form.cleaned_data['themes']
+            category = form.cleaned_data['category']
+            duration = form.cleaned_data['duration']
+            intensity = form.cleaned_data['intensity']
+
+            suggestions = get_suggestions(themes, category)
+
+            return render(request, 'main/training_suggestions.html', {
+                'suggestions': suggestions,
+                'duration': duration,
+                'intensity': intensity,
+                'category': category
+            })
+    else:
+        form = TrainingQuestionForm()
+    return render(request, 'main/training.html', {'form': form})
+
+def get_suggestions(themes, category):
+    suggestions = Multimedia.objects.filter(theme__name__in=themes, categories=category)
+    return suggestions
+
+@login_required
+def save_training_session(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        category_id = request.POST.get('category')
+        duration = request.POST.get('duration')
+        intensity = request.POST.get('intensity')
+        selected_videos = request.POST.getlist('videos')
+
+        if not category_id:
+            return render(request, 'main/error.html', {'message': 'Catégorie non spécifiée.'})
+
+        try:
+            category = Category.objects.get(id=category_id)
+        except Category.DoesNotExist:
+            return render(request, 'main/error.html', {'message': 'Catégorie non valide.'})
+
+        training_session = TrainingSession.objects.create(
+            title=title, 
+            category=category, 
+            duration=duration, 
+            intensity=intensity, 
+            user=request.user
+        )
+
+        for video_id in selected_videos:
+            multimedia = Multimedia.objects.get(id=video_id)
+            TrainingExercise.objects.create(training_session=training_session, multimedia=multimedia)
+
+        return redirect('training_list')
 
 @login_required
 def create_profile(request):
@@ -64,7 +119,7 @@ def create_profile(request):
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
-            selected_categories = request.POST.get('categories').split(',')
+            selected_categories = request.POST.getlist('categories')
             profile.categories.set(selected_categories)
             profile.save()
             request.user.profile_completed = True
