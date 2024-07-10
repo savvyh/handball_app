@@ -61,3 +61,4 @@ class TrainingQuestionForm(forms.Form):
     category = forms.ModelChoiceField(queryset=Category.objects.all(), label="Pour quelle catégorie ?")
     duration = forms.ChoiceField(choices=[('1h', '1h'), ('1h30', '1h30'), ('2h', '2h')], label="Durée de l'entraînement")
     intensity = forms.ChoiceField(choices=[('faible', 'Faible'), ('moyenne', 'Moyenne'), ('élevée', 'Élevée')], label="Intensité de l'entraînement")
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label="Date de la séance")

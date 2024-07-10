@@ -1,3 +1,4 @@
+import datetime, locale
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -7,6 +8,8 @@ from .forms import ProfileCreationForm, TrainingQuestionForm
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django import template
+from django.utils import timezone
+
 
 register = template.Library()
 
@@ -27,8 +30,16 @@ def personal_space(request, profile_id):
         profile = Profile.objects.get(id=profile_id, user=request.user)
     except Profile.DoesNotExist:
         raise Http404("Profile does not exist")
-    sessions = TrainingSession.objects.filter(user=request.user)
-    return render(request, 'main/personal_space.html', {'profile': profile, 'sessions': sessions})
+    
+    today = timezone.now().date()
+    past_sessions = TrainingSession.objects.filter(user=request.user, date__lt=today)
+    upcoming_sessions = TrainingSession.objects.filter(user=request.user, date__gte=today)
+    
+    return render(request, 'main/personal_space.html', {
+        'profile': profile,
+        'past_sessions': past_sessions,
+        'upcoming_sessions': upcoming_sessions
+    })
 
 def club(request):
     return render(request, 'main/club.html')
@@ -67,6 +78,7 @@ def training(request):
             category = form.cleaned_data['category']
             duration = form.cleaned_data['duration']
             intensity = form.cleaned_data['intensity']
+            date = form.cleaned_data['date']
 
             suggestions = get_suggestions(themes, category)
 
@@ -74,7 +86,8 @@ def training(request):
                 'suggestions': suggestions,
                 'duration': duration,
                 'intensity': intensity,
-                'category': category
+                'category': category,
+                'date': date  # Pass the date here
             })
     else:
         form = TrainingQuestionForm()
@@ -87,11 +100,14 @@ def training_intermediate(request):
         category = request.POST.get('category')
         duration = request.POST.get('duration')
         intensity = request.POST.get('intensity')
+        date = request.POST.get('date')
+        
         return render(request, 'main/training_finalize.html', {
             'selected_exercises': selected_exercises,
             'category': category,
             'duration': duration,
-            'intensity': intensity
+            'intensity': intensity,
+            'date': date  # Pass the date here
         })
 
 @login_required
@@ -128,17 +144,27 @@ def save_training_session(request):
         category_id = request.POST.get('category')
         duration = request.POST.get('duration')
         intensity = request.POST.get('intensity')
+        date_str = request.POST.get('date')  # Récupérer la date de la séance
         selected_videos = request.POST.getlist('videos')
 
         if not category_id:
             return render(request, 'main/error.html', {'message': 'Catégorie non spécifiée.'})
 
         try:
-            category = Category.objects.get(id=category_id)
+            category = Category.objects.get(id=int(category_id))
         except Category.DoesNotExist:
             return render(request, 'main/error.html', {'message': 'Catégorie non valide.'})
 
-        # Vérifier si l'utilisateur a un profil, sinon en créer un
+        try:
+            # Configurer le locale en français
+            locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
+            # Convertir la date en objet datetime
+            date_obj = datetime.datetime.strptime(date_str, "%d %B %Y")
+            # Formater la date dans le format attendu
+            formatted_date = date_obj.strftime("%Y-%m-%d")
+        except ValueError:
+            return render(request, 'main/error.html', {'message': 'Format de date invalide.'})
+
         profile, created = Profile.objects.get_or_create(user=request.user, defaults={'name': request.user.username})
 
         training_session = TrainingSession.objects.create(
@@ -146,7 +172,8 @@ def save_training_session(request):
             category=category, 
             duration=duration, 
             intensity=intensity, 
-            user=request.user
+            user=request.user,
+            date=formatted_date  # Enregistrer la date formatée de la séance
         )
 
         for video_id in selected_videos:
@@ -154,7 +181,8 @@ def save_training_session(request):
             TrainingExercise.objects.create(training_session=training_session, multimedia=multimedia)
 
         return redirect('personal_space', profile_id=profile.id)
-
+    
+      
 @login_required
 def create_profile(request):
     if not request.user.can_add_profile():

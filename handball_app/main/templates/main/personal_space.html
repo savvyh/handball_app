@@ -43,8 +43,9 @@
 
         <div class="sessions">
             <h2>Mes Séances</h2>
+            <h3>Séances à venir</h3>
             <div class="sessions-list">
-                {% for session in sessions %}
+                {% for session in upcoming_sessions %}
                     <div class="session-card">
                         <div class="session-header">
                             <h3>{{ session.title }}</h3>
@@ -56,6 +57,32 @@
                         <p>Catégorie: {{ session.category.name }}</p>
                         <p>Durée: {{ session.duration }}</p>
                         <p>Intensité: {{ session.intensity }}</p>
+                        <p>Date: {{ session.date }}</p>
+                        <h4>Exercices :</h4>
+                        <ul>
+                            {% for exercise in session.exercises.all %}
+                                <li>{{ exercise.multimedia.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <h3>Séances passées</h3>
+            <div class="sessions-list">
+                {% for session in past_sessions %}
+                    <div class="session-card">
+                        <div class="session-header">
+                            <h3>{{ session.title }}</h3>
+                            <div class="session-actions">
+                                <a href="#"><i class="fas fa-edit"></i></a>
+                                <a href="#"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                        <p>Catégorie: {{ session.category.name }}</p>
+                        <p>Durée: {{ session.duration }}</p>
+                        <p>Intensité: {{ session.intensity }}</p>
+                        <p>Date: {{ session.date }}</p>
                         <h4>Exercices :</h4>
                         <ul>
                             {% for exercise in session.exercises.all %}

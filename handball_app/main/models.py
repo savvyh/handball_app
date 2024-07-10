@@ -85,6 +85,7 @@ class TrainingSession(models.Model):
     duration = models.CharField(max_length=10, choices=[('1h', '1h'), ('1h30', '1h30'), ('2h', '2h')], default='1h30')
     intensity = models.CharField(max_length=10, choices=[('faible', 'Faible'), ('moyenne', 'Moyenne'), ('élevée', 'Élevée')], default='moyenne')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(default=timezone.now)
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
