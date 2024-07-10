@@ -19,7 +19,10 @@ def landing(request):
 @login_required
 def home(request):
     profiles = Profile.objects.filter(user=request.user)
-    return render(request, 'main/home.html', {'profiles': profiles})
+    latest_videos = Multimedia.objects.order_by('-created_at')[:3]
+    for video in latest_videos:
+        print(video.categories.all())
+    return render(request, 'main/home.html', {'profiles': profiles, 'latest_videos': latest_videos})
 
 def subscribe(request):
     return render(request, 'main/subscribe.html')
@@ -107,7 +110,7 @@ def training_intermediate(request):
             'category': category,
             'duration': duration,
             'intensity': intensity,
-            'date': date  # Pass the date here
+            'date': date  
         })
 
 @login_required
@@ -117,6 +120,8 @@ def training_finalize(request):
         category = request.POST.get('category')
         duration = request.POST.get('duration')
         intensity = request.POST.get('intensity')
+        date = request.POST.get('date')
+        theme = request.POST.get('theme')
         remaining_time = int(duration[:-1]) * 60  # Calcul du temps restant en minutes
 
         # Calculer le temps total des vidéos sélectionnées
@@ -129,13 +134,33 @@ def training_finalize(request):
 
         remaining_time -= total_video_time // 60  # Mise à jour du temps restant
 
+        # Créer ou récupérer une session d'entraînement et l'ajouter à la session
+        training_session = TrainingSession.objects.create(
+            title="Séance personnalisée",
+            category=Category.objects.get(id=category),
+            duration=duration,
+            intensity=intensity,
+            user=request.user,
+            date=date
+        )
+        request.session['training_session_id'] = training_session.id
+
         return render(request, 'main/training_finalize.html', {
             'selected_exercises': selected_exercises,
             'category': category,
             'duration': duration,
             'intensity': intensity,
+            'date': date,
+            'theme': theme,
             'remaining_time': remaining_time
         })
+
+    all_videos = Multimedia.objects.all()
+    selected_exercises = request.session.get('selected_exercises', [])
+    return render(request, 'main/training_finalize.html', {
+        'selected_exercises': selected_exercises,
+        'all_videos': all_videos
+    })
 
 @login_required
 def save_training_session(request):
@@ -156,11 +181,9 @@ def save_training_session(request):
             return render(request, 'main/error.html', {'message': 'Catégorie non valide.'})
 
         try:
-            # Configurer le locale en français
+
             locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
-            # Convertir la date en objet datetime
             date_obj = datetime.datetime.strptime(date_str, "%d %B %Y")
-            # Formater la date dans le format attendu
             formatted_date = date_obj.strftime("%Y-%m-%d")
         except ValueError:
             return render(request, 'main/error.html', {'message': 'Format de date invalide.'})
@@ -173,7 +196,7 @@ def save_training_session(request):
             duration=duration, 
             intensity=intensity, 
             user=request.user,
-            date=formatted_date  # Enregistrer la date formatée de la séance
+            date=formatted_date
         )
 
         for video_id in selected_videos:
@@ -251,3 +274,36 @@ def admin_required(login_url=None):
 
 def member_required(login_url=None):
     return user_passes_test(lambda u: u.is_active and u.is_member, login_url=login_url)
+
+def video_detail(request, video_id):
+    video = get_object_or_404(Multimedia, id=video_id)
+    return redirect('library')
+
+@login_required
+def remove_video(request, video_id):
+    if request.method == 'POST':
+        training_session_id = request.session.get('training_session_id')
+        if not training_session_id:
+            return redirect('training_finalize')
+        training_session = get_object_or_404(TrainingSession, id=training_session_id)
+        video_id = request.POST.get('video_id')
+        try:
+            training_exercise = TrainingExercise.objects.get(training_session=training_session, multimedia_id=video_id)
+            training_exercise.delete()
+        except TrainingExercise.DoesNotExist:
+            pass
+        return redirect('training_finalize')
+
+@login_required
+def add_video(request):
+    if request.method == 'POST':
+        video_id = request.POST.get('video')
+        if not video_id:
+            return redirect('library')
+        training_session_id = request.session.get('training_session_id')
+        if not training_session_id:
+            return redirect('training')
+        training_session = get_object_or_404(TrainingSession, id=training_session_id)
+        video = get_object_or_404(Multimedia, id=video_id)
+        TrainingExercise.objects.create(training_session=training_session, multimedia=video)
+        return redirect('library')

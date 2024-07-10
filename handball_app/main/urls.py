@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import include, path
 from . import views
 
 urlpatterns = [
@@ -19,4 +19,7 @@ urlpatterns = [
     path('remove_favorite/<int:multimedia_id>/', views.remove_favorite, name='remove_favorite'),
     path('favorites/', views.favorite_list, name='favorite_list'),
     path('save_training_session/', views.save_training_session, name='save_training_session'),
+    path('video/<int:video_id>/', views.video_detail, name='video_detail'),
+    path('remove_video/<int:video_id>/', views.remove_video, name='remove_video'),
+    path('add_video/', views.add_video, name='add_video'),
 ]

@@ -75,6 +75,7 @@ class Multimedia(models.Model):
     video_time = models.CharField(max_length=50, default='00:00:00')
     other_file = models.FileField(upload_to='files/', blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title

@@ -6,7 +6,7 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f7f7f7;
@@ -30,7 +30,8 @@ header {
 }
 
 .title-nav h1 {
-    font-family: 'Anton', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
     color: #2C3E50;
     margin: 0;
 }
@@ -104,9 +105,14 @@ header {
     font-size: 24px;
 }
 
+.main-content {
+    padding: 20px;
+}
+
 .profile-selection-section {
     text-align: center;
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .profile-selection-section h1 {
@@ -167,4 +173,102 @@ header {
 
 .add-profile:hover .add-profile-icon {
     color: #666;
+}
+
+.section-divider {
+    margin: 80px 0;
+    border: 0;
+    border-top: 2px solid #e0e0e0;
+}
+
+.latest-videos-section {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.latest-videos-section h2 {
+    font-size: 2em;
+    color: #2C3E50;
+    margin-bottom: 20px;
+}
+
+.latest-videos-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.video {
+    text-align: left;
+    width: 320px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 20px;
+}
+
+.video:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.video video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.video-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #2C3E50;
+    margin-bottom: 5px;
+}
+
+.video-description {
+    font-size: 0.9em;
+    color: #666;
+    margin: 5px 0;
+    font-style: italic;
+}
+
+.video-date {
+    font-size: 0.8em;
+    color: #999;
+    margin: 5px 0;
+}
+
+.video-categories {
+    font-size: 0.9em;
+    color: #333;
+    margin: 5px 0;
+}
+
+.video-categories span {
+    display: inline-block;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 3px 7px;
+    margin: 2px 5px 2px 0;
+}
+
+.video a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.video a.video-details {
+    font-size: 0.9em;
+    color: #0066cc;
+    display: block;
+    margin-top: 10px;
+}
+
+.video a.video-details:hover {
+    text-decoration: underline;
 }

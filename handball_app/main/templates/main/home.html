@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main/home.css' %}">
     <title>Accueil</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
@@ -36,26 +36,50 @@
             </div>
         </nav>
     </header>
-    <div class="profile-selection-section">
-        <h1>Qui va s'entraîner aujourd'hui ?</h1>
-        <div class="profiles-grid">
-            {% for profile in profiles %}
-            <div class="profile">
-                <a href="{% url 'personal_space' profile.id %}">
-                    {% if profile.profile_image %}
-                        <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
-                    {% else %}
-                        <i class="fas fa-user-circle default-profile-icon"></i>
-                    {% endif %}
-                    <p>{{ profile.name }}</p>
-                </a>
+    <div class="main-content">
+        <div class="profile-selection-section">
+            <h1>Qui va s'entraîner aujourd'hui ?</h1>
+            <div class="profiles-grid">
+                {% for profile in profiles %}
+                <div class="profile">
+                    <a href="{% url 'personal_space' profile.id %}">
+                        {% if profile.profile_image %}
+                            <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
+                        {% else %}
+                            <i class="fas fa-user-circle default-profile-icon"></i>
+                        {% endif %}
+                        <p>{{ profile.name }}</p>
+                    </a>
+                </div>
+                {% endfor %}
+                <div class="profile add-profile">
+                    <a href="{% url 'create_profile' %}">
+                        <i class="fas fa-plus-circle add-profile-icon"></i>
+                        <p>Ajouter un profil</p>
+                    </a>
+                </div>
             </div>
-            {% endfor %}
-            <div class="profile add-profile">
-                <a href="{% url 'create_profile' %}">
-                    <i class="fas fa-plus-circle add-profile-icon"></i>
-                    <p>Ajouter un profil</p>
-                </a>
+        </div>
+        <hr class="section-divider">
+        <div class="latest-videos-section">
+            <h2>Dernières vidéos ajoutées</h2>
+            <div class="latest-videos-grid">
+                {% for video in latest_videos %}
+                <div class="video">
+                    <video width="320" height="240" controls>
+                        <source src="{{ video.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p class="video-title">{{ video.title }}</p>
+                    <p class="video-description">{{ video.description }}</p>
+                    <p class="video-categories">
+                        {% for category in video.categories.all %}
+                        <span>{{ category.name }}</span>
+                        {% endfor %}
+                    </p>
+                    <p class="video-date">Ajoutée le : {{ video.created_at|date:"d M Y" }} par {{ video.creator }}</p>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
