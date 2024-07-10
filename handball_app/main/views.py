@@ -1,4 +1,3 @@
-# views.py
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -7,7 +6,9 @@ from .models import Favorite, Multimedia, Profile, Category, Theme, TrainingExer
 from .forms import ProfileCreationForm, TrainingQuestionForm
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+from django import template
 
+register = template.Library()
 
 def landing(request):
     return render(request, 'main/landing.html')
@@ -52,6 +53,10 @@ def library(request):
         'current_theme': theme_filter
     })
 
+def get_suggestions(themes, category):
+    suggestions = Multimedia.objects.filter(theme__name__in=themes, categories=category)
+    return suggestions
+
 @login_required
 def training(request):
     if request.method == 'POST':
@@ -64,7 +69,7 @@ def training(request):
 
             suggestions = get_suggestions(themes, category)
 
-            return render(request, 'main/training_suggestions.html', {
+            return render(request, 'main/training_intermediate.html', {
                 'suggestions': suggestions,
                 'duration': duration,
                 'intensity': intensity,
@@ -74,9 +79,46 @@ def training(request):
         form = TrainingQuestionForm()
     return render(request, 'main/training.html', {'form': form})
 
-def get_suggestions(themes, category):
-    suggestions = Multimedia.objects.filter(theme__name__in=themes, categories=category)
-    return suggestions
+@login_required
+def training_intermediate(request):
+    if request.method == 'POST':
+        selected_exercises = request.POST.getlist('exercises')
+        category = request.POST.get('category')
+        duration = request.POST.get('duration')
+        intensity = request.POST.get('intensity')
+        return render(request, 'main/training_finalize.html', {
+            'selected_exercises': selected_exercises,
+            'category': category,
+            'duration': duration,
+            'intensity': intensity
+        })
+
+@login_required
+def training_finalize(request):
+    if request.method == 'POST':
+        selected_exercises = request.POST.getlist('exercises')
+        category = request.POST.get('category')
+        duration = request.POST.get('duration')
+        intensity = request.POST.get('intensity')
+        remaining_time = int(duration[:-1]) * 60  # Calcul du temps restant en minutes
+
+        # Calculer le temps total des vidéos sélectionnées
+        total_video_time = 0
+        for video_id in selected_exercises:
+            video = Multimedia.objects.get(id=video_id)
+            h, m, s = map(int, video.video_time.split(':'))
+            video_duration = h * 3600 + m * 60 + s
+            total_video_time += video_duration
+
+        remaining_time -= total_video_time // 60  # Mise à jour du temps restant
+
+        return render(request, 'main/training_finalize.html', {
+            'selected_exercises': selected_exercises,
+            'category': category,
+            'duration': duration,
+            'intensity': intensity,
+            'remaining_time': remaining_time
+        })
 
 @login_required
 def save_training_session(request):

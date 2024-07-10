@@ -11,11 +11,12 @@ urlpatterns = [
     path('club/', views.club, name='club'),
     path('create-training/', views.create_training, name='create-training'),
     path('training/', views.training, name='training'),
+    path('training_intermediate/', views.training_intermediate, name='training_intermediate'),
+    path('training_finalize/', views.training_finalize, name='training_finalize'),
     path('create-profile/', views.create_profile, name='create_profile'),
     path('library/', views.library, name='library'),
     path('add_favorite/<int:multimedia_id>/', views.add_favorite, name='add_favorite'),
     path('remove_favorite/<int:multimedia_id>/', views.remove_favorite, name='remove_favorite'),
     path('favorites/', views.favorite_list, name='favorite_list'),
-    path('training', views.training, name='training_list'),
     path('save_training_session/', views.save_training_session, name='save_training_session'),
 ]

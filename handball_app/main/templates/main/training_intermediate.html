@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/training.css' %}">
+    <title>Confirmation des exercices</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="title-nav">
+                <h1>TakTik</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Que cherchez-vous ?">
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="{% url 'library' %}">Bibliothèque</a></li>
+                <li><a href="#">Ressources</a></li>
+                <li class="dropdown">
+                    <a href="#">Mon Espace</a>
+                    <ul class="dropdown-content">
+                        <li><a href="{% url 'settings' %}">Paramètres</a></li>
+                        <li><a href="{% url 'club' %}">Espace Club</a></li>
+                        <li><a href="{% url 'favorite_list' %}">Mes Favoris</a></li>
+                        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="menu-icon">
+                <span>&#9776;</span>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Confirmation des exercices</h2>
+        <form method="post" action="{% url 'training_intermediate' %}">
+            {% csrf_token %}
+            <input type="hidden" name="category" value="{{ category.id }}">
+            <input type="hidden" name="duration" value="{{ duration }}">
+            <input type="hidden" name="intensity" value="{{ intensity }}">
+            <div class="suggestions">
+                {% for video in suggestions %}
+                    <div class="suggestion-item">
+                        <input type="checkbox" name="exercises" value="{{ video.id }}">
+                        <label>{{ video.title }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit">Suivant</button>
+        </form>
+    </div>
+</body>
+</html>
