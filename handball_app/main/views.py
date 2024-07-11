@@ -90,7 +90,7 @@ def training(request):
                 'duration': duration,
                 'intensity': intensity,
                 'category': category,
-                'date': date  # Pass the date here
+                'date': date
             })
     else:
         form = TrainingQuestionForm()
@@ -113,7 +113,6 @@ def training_intermediate(request):
             'date': date  
         })
 
-    # In case of GET request, redirect to training page
     return redirect('training')
 
 @login_required
@@ -125,9 +124,8 @@ def training_finalize(request):
         intensity = request.POST.get('intensity')
         date = request.POST.get('date')
         theme = request.POST.get('theme')
-        remaining_time = int(duration[:-1]) * 60  # Calcul du temps restant en minutes
+        remaining_time = int(duration[:-1]) * 60
 
-        # Calculer le temps total des vidéos sélectionnées
         total_video_time = 0
         for video_id in selected_exercises:
             video = Multimedia.objects.get(id=video_id)
@@ -135,11 +133,10 @@ def training_finalize(request):
             video_duration = h * 3600 + m * 60 + s
             total_video_time += video_duration
 
-        remaining_time -= total_video_time // 60  # Mise à jour du temps restant
+        remaining_time -= total_video_time // 60
 
-        # Créer ou récupérer une session d'entraînement et l'ajouter à la session
         training_session = TrainingSession.objects.create(
-            title="Séance personnalisée",
+            title="Séance préparée",
             category=Category.objects.get(id=category),
             duration=duration,
             intensity=intensity,
