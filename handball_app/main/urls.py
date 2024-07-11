@@ -22,4 +22,5 @@ urlpatterns = [
     path('video/<int:video_id>/', views.video_detail, name='video_detail'),
     path('remove_video/<int:video_id>/', views.remove_video, name='remove_video'),
     path('add_video/', views.add_video, name='add_video'),
+    path('error', views.error, name='error'),
 ]
