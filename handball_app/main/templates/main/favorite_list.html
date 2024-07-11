@@ -1,26 +1,58 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Favoris</title>
+    <link rel="stylesheet" href="{% static 'main/favorites.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
 </head>
 <body>
-    <h1>Mes Favoris</h1>
-    <div class="grid-container">
-        {% for favorite in favorites %}
-            <div class="grid-item">
-                <div class="video-container">
-                    <video src="{{ favorite.multimedia.video.url }}" controls></video>
-                </div>
-                <div class="info">
-                    <h2>{{ favorite.multimedia.title }}</h2>
-                    <p>{{ favorite.multimedia.description }}</p>
-                    <p>Catégories: {{ favorite.multimedia.categories.all|join:", " }}</p>
-                    <a href="{% url 'remove_favorite' favorite.multimedia.id %}">Supprimer des Favoris</a>
-                </div>
+    <header>
+        <nav class="navbar">
+            <div class="title-nav">
+                <h1>TakTik</h1>
             </div>
-        {% endfor %}
-    </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Que cherchez-vous ?">
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="{% url 'library' %}">Bibliothèque</a></li>
+                <li><a href="#">Ressources</a></li>
+                <li class="dropdown">
+                    <a href="#">Mon Espace</a>
+                    <ul class="dropdown-content">
+                        <li><a href="{% url 'settings' %}">Paramètres</a></li>
+                        <li><a href="{% url 'club' %}">Espace Club</a></li>
+                        <li><a href="{% url 'favorite_list' %}">Mes Favoris</a></li>
+                        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="menu-icon">
+                <span>&#9776;</span>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <h1>Mes Favoris</h1>
+        <div class="grid-container">
+            {% for favorite in favorites %}
+                <div class="grid-item">
+                    <div class="video-container">
+                        <video src="{{ favorite.multimedia.video.url }}" controls></video>
+                    </div>
+                    <div class="info">
+                        <h2>{{ favorite.multimedia.title }}</h2>
+                        <p>{{ favorite.multimedia.description }}</p>
+                        <p>Catégories: {{ favorite.multimedia.categories.all|join:", " }}</p>
+                        <a href="{% url 'remove_favorite' favorite.multimedia.id %}" class="btn-remove">Supprimer des Favoris</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
 </body>
 </html>
