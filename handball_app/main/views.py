@@ -1,4 +1,5 @@
-import datetime, locale
+import datetime
+import locale
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -9,7 +10,6 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django import template
 from django.utils import timezone
-
 
 register = template.Library()
 
@@ -85,7 +85,7 @@ def training(request):
 
             suggestions = get_suggestions(themes, category)
 
-            return render(request, 'main/training_intermediate.html', {
+            return render(request, 'main/training_suggestions.html', {
                 'suggestions': suggestions,
                 'duration': duration,
                 'intensity': intensity,
@@ -112,6 +112,9 @@ def training_intermediate(request):
             'intensity': intensity,
             'date': date  
         })
+
+    # In case of GET request, redirect to training page
+    return redirect('training')
 
 @login_required
 def training_finalize(request):
@@ -169,19 +172,18 @@ def save_training_session(request):
         category_id = request.POST.get('category')
         duration = request.POST.get('duration')
         intensity = request.POST.get('intensity')
-        date_str = request.POST.get('date')  # Récupérer la date de la séance
-        selected_videos = request.POST.getlist('videos')
+        date_str = request.POST.get('date')
+        selected_videos = request.POST.getlist('exercises')
 
         if not category_id:
             return render(request, 'main/error.html', {'message': 'Catégorie non spécifiée.'})
 
         try:
-            category = Category.objects.get(id=int(category_id))
+            category = Category.objects.get(name=category_id)
         except Category.DoesNotExist:
             return render(request, 'main/error.html', {'message': 'Catégorie non valide.'})
 
         try:
-
             locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
             date_obj = datetime.datetime.strptime(date_str, "%d %B %Y")
             formatted_date = date_obj.strftime("%Y-%m-%d")
@@ -196,7 +198,7 @@ def save_training_session(request):
             duration=duration, 
             intensity=intensity, 
             user=request.user,
-            date=formatted_date
+            date=date_obj
         )
 
         for video_id in selected_videos:
@@ -204,8 +206,7 @@ def save_training_session(request):
             TrainingExercise.objects.create(training_session=training_session, multimedia=multimedia)
 
         return redirect('personal_space', profile_id=profile.id)
-    
-      
+
 @login_required
 def create_profile(request):
     if not request.user.can_add_profile():
@@ -226,7 +227,6 @@ def create_profile(request):
         form = ProfileCreationForm(user=request.user)
     categories = Category.objects.all()
     return render(request, 'main/create_profile.html', {'form': form, 'categories': categories})
-
 
 class ProfileCreateView(CreateView):
     model = Profile
@@ -307,3 +307,6 @@ def add_video(request):
         video = get_object_or_404(Multimedia, id=video_id)
         TrainingExercise.objects.create(training_session=training_session, multimedia=video)
         return redirect('library')
+
+def error(request):
+    return render(request, 'main/error.html')

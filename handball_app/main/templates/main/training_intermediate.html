@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main/training.css' %}">
     <title>Confirmation des exercices</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -46,8 +48,8 @@
             <div class="suggestions">
                 {% for video in suggestions %}
                     <div class="suggestion-item">
-                        <input type="checkbox" name="exercises" value="{{ video.id }}">
-                        <label>{{ video.title }}</label>
+                        <input type="checkbox" id="video_{{ video.id }}" name="exercises" value="{{ video.id }}">
+                        <label for="video_{{ video.id }}" class="checkbox-label">{{ video.title }}</label>
                     </div>
                 {% endfor %}
             </div>

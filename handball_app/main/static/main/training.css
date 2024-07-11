@@ -1,11 +1,14 @@
+/* General Styles */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
 header {
@@ -20,13 +23,9 @@ header {
     justify-content: space-between;
 }
 
-.title-nav {
-    display: flex;
-    align-items: center;
-}
-
 .title-nav h1 {
-    font-family: 'Anton', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
     color: #2C3E50;
     margin: 0;
 }
@@ -102,13 +101,17 @@ header {
 
 /* Form Styles */
 .container {
-    padding: 20px;
+    padding: 40px;
     max-width: 800px;
     margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
 }
 
 .container h2 {
-    font-size: 24px;
+    font-size: 2em;
     margin-bottom: 20px;
     color: #2C3E50;
     text-align: center;
@@ -119,6 +122,10 @@ form {
     flex-direction: column;
 }
 
+.form-group {
+    margin-bottom: 20px;
+}
+
 form label {
     font-size: 16px;
     margin-bottom: 5px;
@@ -127,7 +134,8 @@ form label {
 
 form input[type="text"],
 form select,
-form input[type="checkbox"] {
+form input[type="checkbox"],
+form input[type="date"] {
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -135,42 +143,101 @@ form input[type="checkbox"] {
     font-size: 16px;
 }
 
+form input[type="date"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 form button {
     padding: 15px 20px;
-    background-color: #2C3E50;
+    background: linear-gradient(to right, #00b4db, #0083b0);
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 18px;
     align-self: center;
     width: 50%;
     max-width: 300px;
+    transition: background 0.3s;
 }
 
 form button:hover {
-    background-color: #34495e;
+    background: linear-gradient(to right, #0083b0, #00b4db);
 }
 
 /* Suggestions Styles */
-.suggestions {
+.suggestions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.suggestion-card {
     display: flex;
     flex-direction: column;
-}
-
-.suggestions div {
-    display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.suggestions img {
-    width: 150px;
-    height: 150px;
-    margin-right: 20px;
+.suggestion-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.suggestions label {
+.suggestion-item input[type="checkbox"] {
+    display: none;
+}
+
+.suggestion-item label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: 16px;
     color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.suggestion-item input[type="checkbox"]:checked + label .video-container {
+    background-color: #00b4db;
+    color: #fff;
+    border-color: #0083b0;
+}
+
+.video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.video-title {
+    font-size: 1em;
+    margin-top: 10px;
+    color: #2C3E50;
+}
+
+.submit-btn {
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: linear-gradient(to right, #00b4db, #0083b0);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    align-self: center;
+    width: 50%;
+    max-width: 300px;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(to right, #0083b0, #00b4db);
 }

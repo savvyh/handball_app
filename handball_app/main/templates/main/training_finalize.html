@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'main/training.css' %}">
+    <link rel="stylesheet" href="{% static 'main/session_completed.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Finaliser la séance</title>
 </head>
 <body>
@@ -36,7 +37,100 @@
         </nav>
     </header>
     <div class="container">
-        <h2>Finaliser la séance</h2>
+        <div class="header">
+            <div class="icon">
+                <i class="fas fa-dumbbell"></i>
+            </div>
+            <h1>Ma séance du {{ date }}</h1>
+        </div>
+        <div class="session-summary">
+            <div class="session-theme">
+                <i class="fas fa-bullseye"></i>
+                <h2>Le thème de l'entraînement</h2>
+                <p>{{ theme }}</p>
+            </div>
+            <div class="session-details">
+                <p>Catégorie: {{ category }}</p>
+                <p>Durée: {{ duration }}</p>
+                <p>Intensité: {{ intensity }}</p>
+            </div>
+        </div>
+        <div class="session-section">
+            <h3>Échauffement</h3>
+            <ul>
+                {% for video_id in selected_exercises %}
+                    {% with video=video_id|get_video_by_id %}
+                        {% for theme in video.theme.all %}
+                            {% if theme.name == 'Échauffement' %}
+                                <li>
+                                    <span>{{ video.title }}</span>
+                                    <div class="actions">
+                                        <a href="{% url 'library' %}" class="play"><i class="fas fa-play-circle"></i></a>
+                                        <form method="post" action="{% url 'remove_video' video.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="video_id" value="{{ video.id }}">
+                                            <button class="delete"><i class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="session-section">
+            <h3>Technique</h3>
+            <ul>
+                {% for video_id in selected_exercises %}
+                    {% with video=video_id|get_video_by_id %}
+                        {% for theme in video.theme.all %}
+                            {% if theme.name == 'Attaque' %}
+                                <li>
+                                    <span>{{ video.title }}</span>
+                                    <div class="actions">
+                                        <a href="{% url 'library' %}" class="play"><i class="fas fa-play-circle"></i></a>
+                                        <form method="post" action="{% url 'remove_video' video.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="video_id" value="{{ video.id }}">
+                                            <button class="delete"><i class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="session-section">
+            <h3>Autres exercices</h3>
+            <ul>
+                {% for video_id in selected_exercises %}
+                    {% with video=video_id|get_video_by_id %}
+                        {% for theme in video.theme.all %}
+                            {% if theme.name not in 'Échauffement' and theme.name not in 'Attaque' %}
+                                <li>
+                                    <span>{{ video.title }}</span>
+                                    <div class="actions">
+                                        <a href="{% url 'library' %}" class="play"><i class="fas fa-play-circle"></i></a>
+                                        <form method="post" action="{% url 'remove_video' video.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="video_id" value="{{ video.id }}">
+                                            <button class="delete"><i class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="session-section">
+            <h3>Match</h3>
+            <p>Durée du match : {{ remaining_time }} minutes</p>
+        </div>
         <form method="post" action="{% url 'save_training_session' %}">
             {% csrf_token %}
             <input type="hidden" name="category" value="{{ category }}">
@@ -44,56 +138,7 @@
             <input type="hidden" name="intensity" value="{{ intensity }}">
             <input type="hidden" name="date" value="{{ date }}">
             <input type="hidden" name="title" value="Séance personnalisée">
-            <div class="session-structure">
-                <h3>1. Mot de bienvenue, retour sur le match, présentation de la séance.</h3>
-                <h3>2. Échauffement ludique</h3>
-                <div class="exercise">
-                    {% for video_id in selected_exercises %}
-                        {% with video=video_id|get_video_by_id %}
-                            {% for theme in video.theme.all %}
-                                {% if theme.name == 'Échauffement' %}
-                                    <video width="320" height="240" controls>
-                                        <source src="{{ video.video.url }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                {% endif %}
-                            {% endfor %}
-                        {% endwith %}
-                    {% endfor %}
-                </div>
-                <h3>3. Exercices techniques</h3>
-                <div class="exercise">
-                    {% for video_id in selected_exercises %}
-                        {% with video=video_id|get_video_by_id %}
-                            {% for theme in video.theme.all %}
-                                {% if theme.name == 'Attaque' %}
-                                    <video width="320" height="240" controls>
-                                        <source src="{{ video.video.url }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                {% endif %}
-                            {% endfor %}
-                        {% endwith %}
-                    {% endfor %}
-                </div>
-                <h3>4. Autres exercices</h3>
-                <div class="exercise">
-                    {% for video_id in selected_exercises %}
-                        {% with video=video_id|get_video_by_id %}
-                            {% for theme in video.theme.all %}
-                                {% if theme.name not in 'Échauffement' and theme.name not in 'Attaque' %}
-                                    <video width="320" height="240" controls>
-                                        <source src="{{ video.video.url }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                {% endif %}
-                            {% endfor %}
-                        {% endwith %}
-                    {% endfor %}
-                </div>
-                <h3>5. Match</h3>
-                <p>Durée du match : {{ remaining_time }} minutes</p>
-            </div>
+            <input type="hidden" name="videos" value="{{ selected_exercises|join:',' }}">
             <button type="submit">Enregistrer la séance</button>
         </form>
     </div>

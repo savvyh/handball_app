@@ -1,6 +1,5 @@
-# forms.py
 from django import forms
-from .models import Profile, Category, Exercise, Multimedia, Theme, TrainingSession
+from .models import Profile, Category, Multimedia, Theme, TrainingSession
 
 class ProfileCreationForm(forms.ModelForm):
     categories = forms.ModelMultipleChoiceField(

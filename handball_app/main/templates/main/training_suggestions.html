@@ -37,25 +37,29 @@
     </header>
     <div class="container">
         <h2>Suggestions pour la séance</h2>
-        <form method="post" action="{% url 'save_training_session' %}">
+        <form method="post" action="{% url 'training_intermediate' %}">
             {% csrf_token %}
-            <input type="hidden" name="category" value="{{ category.id }}">
+            <input type="hidden" name="category" value="{{ category }}">
             <input type="hidden" name="duration" value="{{ duration }}">
             <input type="hidden" name="intensity" value="{{ intensity }}">
-            <input type="hidden" name="title" value="Séance personnalisée">
-            <div class="suggestions">
+            <input type="hidden" name="date" value="{{ date }}">
+            <div class="suggestions-grid">
                 {% for video in suggestions %}
-                    <div class="suggestion-item">
-                        <input type="checkbox" name="videos" value="{{ video.id }}">
-                        <label>{{ video.title }}</label>
-                        <video width="320" height="240" controls>
-                            <source src="{{ video.video.url }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                    <div class="suggestion-card">
+                        <input type="checkbox" id="video_{{ video.id }}" name="exercises" value="{{ video.id }}">
+                        <label for="video_{{ video.id }}" class="checkbox-label">
+                            <div class="video-container">
+                                <video width="320" height="240" controls>
+                                    <source src="{{ video.video.url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <span class="video-title">{{ video.title }}</span>
+                            </div>
+                        </label>
                     </div>
                 {% endfor %}
             </div>
-            <button type="submit">Enregistrer la séance</button>
+            <button type="submit" class="submit-btn">Suivant</button>
         </form>
     </div>
 </body>
