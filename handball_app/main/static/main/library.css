@@ -203,3 +203,31 @@ header {
 .grid-item .info a:hover {
     color: #0056b3;
 }
+
+.item-description {
+    font-size: 0.9em;
+    color: #666;
+    margin: 5px 0;
+    font-style: italic;
+}
+
+.item-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #2C3E50;
+    margin-bottom: 5px;
+}
+
+.item-categories {
+    font-size: 0.9em;
+    color: #333;
+    margin: 5px 0;
+}
+
+.item-categories span {
+    display: inline-block;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 3px 7px;
+    margin: 2px 5px 2px 0;
+}
