@@ -37,11 +37,17 @@
         </nav>
     </header>
     <div class="personal-space">
-        <h1>Bienvenue dans votre espace personnel, {{ profile.name }}</h1>
-        <p>Créez des séances complètes de A à Z en quelques clics!</p>
+        <div class="profile-header">
+            <div class="profile-text">
+                <h1>Bienvenue dans votre espace personnel, <br>{{ profile.name }}</h1>
+                <p>Créez des séances complètes de A à Z en quelques clics!</p>
+            </div>
+            <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="profile-image">
+        </div>
         <button type="button"><a href="{% url 'create-training' %}">Je crée ma séance</a></button>
 
         <div class="sessions">
+            <hr class="section-divider">
             <h2>Mes Séances</h2>
             <h3>Séances à venir</h3>
             <div class="sessions-list">
@@ -57,8 +63,6 @@
                         <p>Catégorie: {{ session.category.name }}</p>
                         <p>Durée: {{ session.duration }}</p>
                         <p>Intensité: {{ session.intensity }}</p>
-                        <p>Date: {{ session.date }}</p>
-                        <h4>Exercices :</h4>
                         <ul>
                             {% for exercise in session.exercises.all %}
                                 <li>{{ exercise.multimedia.title }}</li>
@@ -83,7 +87,6 @@
                         <p>Durée: {{ session.duration }}</p>
                         <p>Intensité: {{ session.intensity }}</p>
                         <p>Date: {{ session.date }}</p>
-                        <h4>Exercices :</h4>
                         <ul>
                             {% for exercise in session.exercises.all %}
                                 <li>{{ exercise.multimedia.title }}</li>
@@ -92,6 +95,12 @@
                     </div>
                 {% endfor %}
             </div>
+        </div>
+
+        <div class="statistics">
+            <hr class="section-divider">
+            <h2>Suivi des séances</h2>
+            <img src="{% static 'main/suivi.png' %}" alt="statistics" class="statistics-image">
         </div>
     </div>
 </body>
