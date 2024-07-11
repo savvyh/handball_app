@@ -18,6 +18,16 @@ header {
     border-bottom: 1px solid #e0e0e0;
 }
 
+h1 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1 a:link, h1 a:visited, h1 a:hover, h1 a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
 .navbar {
     display: flex;
     align-items: center;

@@ -10,6 +10,16 @@ body {
     color: #333;
 }
 
+h1 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1 a:link, h1 a:visited, h1 a:hover, h1 a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
 header {
     background-color: #fff;
     padding: 10px 20px;
